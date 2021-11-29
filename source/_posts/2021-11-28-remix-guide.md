@@ -1,5 +1,5 @@
 ---
-title: remix-guide
+title: Remix.run新手教程
 date: 2021-11-28 20:17:24
 tags: [javascript,framework,ssr,next.js,react,guide]
 category: Tech
