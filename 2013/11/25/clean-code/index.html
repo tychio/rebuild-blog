@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>《代码整洁之道》Clean Code | Tychlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="这本书读了许久才读了一遍，不同于之前读到的一些方法性的书籍，该书有更多的细节，但其中又存在许多理论性的东西，要消化它们可不是很容易。读完一遍后又快速回顾了一遍，马上又会发现很多新的东西并有一些新的理解，甚至让我觉得写这篇文章有点太急了，不过我还是应该尝试收集一些有营养的东西，至少记录现在的想法，相信对之后的第二遍阅读会更有益处。 书名其实有点误导我，或者说它不仅仅是其字面意思那样简单，‘整洁’不是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《代码整洁之道》Clean Code">
+<meta property="og:url" content="https://blog.tychio.net/2013/11/25/clean-code/index.html">
+<meta property="og:site_name" content="Tychlog">
+<meta property="og:description" content="这本书读了许久才读了一遍，不同于之前读到的一些方法性的书籍，该书有更多的细节，但其中又存在许多理论性的东西，要消化它们可不是很容易。读完一遍后又快速回顾了一遍，马上又会发现很多新的东西并有一些新的理解，甚至让我觉得写这篇文章有点太急了，不过我还是应该尝试收集一些有营养的东西，至少记录现在的想法，相信对之后的第二遍阅读会更有益处。 书名其实有点误导我，或者说它不仅仅是其字面意思那样简单，‘整洁’不是">
+<meta property="og:locale">
+<meta property="og:image" content="https://blog.tychio.net/images/cleancode.jpg">
+<meta property="article:published_time" content="2013-11-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-30T05:41:35.020Z">
+<meta property="article:author" content="Zhengzheng Zhang">
+<meta property="article:tag" content="software">
+<meta property="article:tag" content="SE">
+<meta property="article:tag" content="软件工程">
+<meta property="article:tag" content="代码整洁">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.tychio.net/images/cleancode.jpg">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script type="text/javascript">
+    var auther = document.getElementsByTagName('meta');
+    auther = auther[auther.length - 1];
+    auther.content = (-~[]+([]+[])+(-~[]<<!![]<<!![]-~[])+-~[]+-~[]+(!![]<<!![])+-[]+(!![]<<-~[]-~[]+!![])+(!![]-~[])*(!![]+!![]+!![])+(!![]-~[])+(!![]-~[])*(-~[]<<!![])-[])[([]/[]+{})[-~[]<<-~[]-~[]-~[]-~[]]+([]/[]+{})[-~[]<<-~[]<<!![]]+(([]+[])[([]+{})[(-~[]<<-~[]<<-~[])-~[]]+([]+{})[-~[]]+([][{}]+{})[-~[]]+(![]+{})[(-~[]<<-~[])-~[]]+(!![]+{})[-[]]+(!![]+{})[-~[]]+([][{}]+{})[-[]]+([]+{})[(-~[])+(-~[]+!![]+{})[-[]]]+((~[])/(-![])+{})[(-~[]+!![])+(-~[]+{})[-[]]]+([][{}]+{})[-~[]+(-[]+{})[-[]]]+(([]==-[])+{})[-~[]]]+{})[([]+{}+!![]+([]===[]))[(-~[]-~[])+(-~[]-~[]+{})[-[]]]+(([])[!![]]+{})[-[]]+([]/[]+{})[-~[]+(!![]+!![]+{})[-[]]]+(!![]+{}+![])[-~[]-~[]+(!![]-~[]+{})[-[]]]+(([{}]!==[])+{})[~[]-~[]]+(([{}]!==[])+{})[[]-~[]]]((-~[]<<-~[]-~[]-~[])-~[],(!![]+!![])*(-~[]-~[]-~[]))]((((-~[]+!![])<<!![])+~[])*(-~[]+((([]!==[])-[])-~[]+([]+[]))));
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Tychlog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header>
+  <div id="logo">
+    <span class="logo-patial logo-top">
+    </span>
+    <span class="logo-patial logo-left">
+    </span>
+    <span class="logo-patial logo-right">
+    </span>
+  </div>
+  <div id="top">
+    <a href="/"><h1>Tychlog</h1></a>
+    <nav>
+      
+        <a class="main-nav-link" href="/categories/Tech">Tech</a>
+      
+        <a class="main-nav-link" href="/categories/Work">Work</a>
+      
+        <a class="main-nav-link" href="/categories/Read">Read</a>
+      
+        <a class="main-nav-link" href="/archives">Archives</a>
+      
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://www.tychio.net">About</a>
+      
+        <a class="main-nav-link" href="/atom.xml">Feed</a>
+      
+    </nav>
+    <a id="list"></a>
+  </div>
+</header>
+  <main>
+    <dl>
+  <dt><h1>《代码整洁之道》Clean Code</h1></dt>
+  <dd>
+      <article id="post-clean-code">
+        <time>Nov 26 2013 </time>
+        <p><img src="/images/cleancode.jpg" alt="Clean Code">这本书读了许久才读了一遍，不同于之前读到的一些方法性的书籍，该书有更多的细节，但其中又存在许多理论性的东西，要消化它们可不是很容易。读完一遍后又快速回顾了一遍，马上又会发现很多新的东西并有一些新的理解，甚至让我觉得写这篇文章有点太急了，不过我还是应该尝试收集一些有营养的东西，至少记录现在的想法，相信对之后的第二遍阅读会更有益处。</p>
+<p>书名其实有点误导我，或者说它不仅仅是其字面意思那样简单，‘整洁’不是简单的清洁，其主旨在于一种设计上的精巧。书的开篇就引用了几位大牛对代码整洁的解释来描述其意义。从抽象的描述中说，整洁代表着优雅、愉悦、精巧、简单，具体来说我觉得有以下几点：</p>
+<ul>
+<li>易于维护，依赖简单。</li>
+<li>设计精巧，没有改进的余地。</li>
+<li>高可读性，意图一目了然。</li>
+<li>完善的测试与错误处理。</li>
+<li>没有重复，最精简的实体。</li>
+</ul>
+<p>最后作者总结为深合已意，其实说起来简单，可做起来却不是这么容易的。代码可不是一块光秃秃的地板，只要使劲擦总能变整洁的。</p>
+<span id="more"></span>
+
+<p>《代码整洁之道》占了很大篇幅的前半部分其实是在讲编码规范，但又不完全是，似乎是一种指导原则。</p>
+<p>先说说命名，在Refactoring中也有<code>rename method</code>这个方法，最开始看到它的时候其实还觉得挺好笑，觉得这也能算一个重构方法吗，但慢慢项目经验增加后，感到这是最基础也是最有效的一种重构手段。在我毕业后的第一个项目中我就遭遇了麻烦，大量的逻辑使我本来认为不错的编程习惯彻底崩溃，重复的变量名充斥在各个作用域中，有时甚至互相交替使用导致了各种bug。所以那时我就为公司制定了一系列的命名规范，比如统一使用驼峰命名、常量使用大写、用动词+名词的方式命名函数等等。大部分的规范已经变成了我的习惯而沿用到现在，但我仍能感到在为函数或方法命名时的纠结。</p>
+<p>命名需要有意义，好像一句话，但同时又应该避免含糊的词，比如the、a、data之类的词。另外，作者建议不要使用匈牙利命名添加一些编码的前缀，但我觉得在JavaScript这样的弱类型语言中有时还是有点必要的，我还喜欢为jQuery对象添加<code>$</code>前缀来标识它。还有一点很重要，统一用词，有时我会怀疑自己的词汇量是否比外国小学生还烂，不过我发现这也是一个优点。因为对应一个意思，我第一个想到的总会是那个词，而看到那个词我也总会明白其意思，绝不会在get与fetch之间犹豫。</p>
+<p>可能许多人会遇到一个问题，函数的功能太多了，导致名称很长仍无法完全描述其功能，此时解决问题的不是命名，而是重构，函数不该是如此多功能的东西，它需要被拆分。看到第三章，我突然想到，这是不是某种驱动关系。为函数命名驱使我们要不断的理清函数的功能和意义，并保持其单一功能性。</p>
+<p>另外在第八章中讲到的边界也很有意思，说到第三方库，JavaScript中可以说是没有人不用第三方库的，尤其是我现在的公司，依赖于requirejs这样的模块工具使用了许多第三方库。起初每个功能都很快的被开发出来，感觉不错，但慢慢的随着开发的深入，各种插件与库的冲突不断，想替换又发现有很多地方都在调用其方法，代码变成了脏乱差。如果开始可以封装第三方库的方法，此时只需要重写该方法就可以轻松替换。</p>
+<p>在十三章中提到了并发编程，这有点像JavaScript中的异步特性。比如使用<code>jQuery.animation</code>完成一些复杂动画时，需要一个动画队列，此时动画的标签就是限定资源，这是一个生产者和消费者模型。当然真正的并行要比这复杂多了，但仍然可以从中借鉴到一些思想。</p>
+
+      </article>
+  </dd>
+  <dd>
+      <div class="comments" id="disqus_thread"></div>
+  </dd>
+</dl>
+
+  </main>
+  <footer id="footer">
+  <a href="#" id="backtop">&#94;</a>
+  <address>
+    <p>
+      <span>&copy; 2021</span>
+      <span>Designed by Zhengzheng Zhang</span>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+    </p>
+    <p>
+      <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+    </p>
+  </address>
+</footer>
+  <script type="text/javascript" src="/js/script.js"></script>
+
+</body>
+
+</html>

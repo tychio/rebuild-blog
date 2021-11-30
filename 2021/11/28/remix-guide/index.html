@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Remix.run新手教程 | Tychlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="最近刚在JavaScript Weekly看到了Remix.run(以下简称Remix)准备开源发布1.0版本。没过两天就看到Remix飙到Github Trending趋势榜第一了。感觉是已经火了啊，不知道后续跟Next.js比怎么样。不过看起来不算太复杂，很多东西都封装起来了，语法很轻。所以准备学习一下，顺便做点学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Remix.run新手教程">
+<meta property="og:url" content="https://blog.tychio.net/2021/11/28/remix-guide/index.html">
+<meta property="og:site_name" content="Tychlog">
+<meta property="og:description" content="最近刚在JavaScript Weekly看到了Remix.run(以下简称Remix)准备开源发布1.0版本。没过两天就看到Remix飙到Github Trending趋势榜第一了。感觉是已经火了啊，不知道后续跟Next.js比怎么样。不过看起来不算太复杂，很多东西都封装起来了，语法很轻。所以准备学习一下，顺便做点学习笔记。">
+<meta property="og:locale">
+<meta property="og:image" content="https://blog.tychio.net/images/remix.jpg">
+<meta property="og:image" content="https://blog.tychio.net/images/my_cv.png">
+<meta property="article:published_time" content="2021-11-28T12:17:24.000Z">
+<meta property="article:modified_time" content="2021-11-30T05:41:35.020Z">
+<meta property="article:author" content="Zhengzheng Zhang">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="framework">
+<meta property="article:tag" content="ssr">
+<meta property="article:tag" content="next.js">
+<meta property="article:tag" content="guide">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.tychio.net/images/remix.jpg">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script type="text/javascript">
+    var auther = document.getElementsByTagName('meta');
+    auther = auther[auther.length - 1];
+    auther.content = (-~[]+([]+[])+(-~[]<<!![]<<!![]-~[])+-~[]+-~[]+(!![]<<!![])+-[]+(!![]<<-~[]-~[]+!![])+(!![]-~[])*(!![]+!![]+!![])+(!![]-~[])+(!![]-~[])*(-~[]<<!![])-[])[([]/[]+{})[-~[]<<-~[]-~[]-~[]-~[]]+([]/[]+{})[-~[]<<-~[]<<!![]]+(([]+[])[([]+{})[(-~[]<<-~[]<<-~[])-~[]]+([]+{})[-~[]]+([][{}]+{})[-~[]]+(![]+{})[(-~[]<<-~[])-~[]]+(!![]+{})[-[]]+(!![]+{})[-~[]]+([][{}]+{})[-[]]+([]+{})[(-~[])+(-~[]+!![]+{})[-[]]]+((~[])/(-![])+{})[(-~[]+!![])+(-~[]+{})[-[]]]+([][{}]+{})[-~[]+(-[]+{})[-[]]]+(([]==-[])+{})[-~[]]]+{})[([]+{}+!![]+([]===[]))[(-~[]-~[])+(-~[]-~[]+{})[-[]]]+(([])[!![]]+{})[-[]]+([]/[]+{})[-~[]+(!![]+!![]+{})[-[]]]+(!![]+{}+![])[-~[]-~[]+(!![]-~[]+{})[-[]]]+(([{}]!==[])+{})[~[]-~[]]+(([{}]!==[])+{})[[]-~[]]]((-~[]<<-~[]-~[]-~[])-~[],(!![]+!![])*(-~[]-~[]-~[]))]((((-~[]+!![])<<!![])+~[])*(-~[]+((([]!==[])-[])-~[]+([]+[]))));
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Tychlog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header>
+  <div id="logo">
+    <span class="logo-patial logo-top">
+    </span>
+    <span class="logo-patial logo-left">
+    </span>
+    <span class="logo-patial logo-right">
+    </span>
+  </div>
+  <div id="top">
+    <a href="/"><h1>Tychlog</h1></a>
+    <nav>
+      
+        <a class="main-nav-link" href="/categories/Tech">Tech</a>
+      
+        <a class="main-nav-link" href="/categories/Work">Work</a>
+      
+        <a class="main-nav-link" href="/categories/Read">Read</a>
+      
+        <a class="main-nav-link" href="/archives">Archives</a>
+      
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://www.tychio.net">About</a>
+      
+        <a class="main-nav-link" href="/atom.xml">Feed</a>
+      
+    </nav>
+    <a id="list"></a>
+  </div>
+</header>
+  <main>
+    <dl>
+  <dt><h1>Remix.run新手教程</h1></dt>
+  <dd>
+      <article id="post-remix-guide">
+        <time>Nov 28 2021 </time>
+        <p><img src="/images/remix.jpg"></p>
+<p>最近刚在JavaScript Weekly看到了Remix.run(以下简称Remix)准备开源发布1.0版本。没过两天就看到Remix飙到Github Trending趋势榜第一了。感觉是已经火了啊，不知道后续跟Next.js比怎么样。不过看起来不算太复杂，很多东西都封装起来了，语法很轻。所以准备学习一下，顺便做点学习笔记。</p>
+<span id="more"></span>
+
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>从npm下载remix最新版并生成项目。</p>
+<p><code>npx create-remix@latest</code></p>
+<blockquote>
+<p><code>? Where would you like to create your app?</code> my-cv</p>
+</blockquote>
+<p>我准备做个展示简历的Web应用，动态显示项目经历，这样还算有点需求，不然单纯只是个Demo，毕竟没有需求就没法好好深入学习。而且SSR(Server Side Render服务端渲染)的特色就是方便SEO，做个展示动态数据类的应用是最适合的。命名<code>my-cv</code>。</p>
+<blockquote>
+<p><code>? Where do you want to deploy? Choose Remix if you&#39;re unsure, it&#39;s easy to change deployment targets.</code></p>
+</blockquote>
+<ul>
+<li>Remix App Server</li>
+<li>Express Server</li>
+<li>Architect (AWS Lambda)</li>
+<li>Fly.io</li>
+<li>Netlify</li>
+<li>Vercel</li>
+<li>Cloudflare Workers<br>当然选择原汁原味的Remix App Server了</li>
+</ul>
+<blockquote>
+<p><code>? TypeScript or JavaScript?</code><br>TypeScript</p>
+</blockquote>
+<ul>
+<li>JavaScript<br>我选择了TypeScript。其实我个人的项目一般不选择TypeScript，不过这次还需要学习以下，就尽量模拟的更正式一些。对于个人开发者来说TypeScript弊大于利，虽然确实可以有效减少错误，和找错误的时间成本，但是定义类型等启动项目时准备的时间更多，还有好不容易找到的冷门库不支持TS的风险。</li>
+</ul>
+<blockquote>
+<p>? Do you want me to run <code>npm install</code>? <code>Y</code><br>最后安装就行了。</p>
+</blockquote>
+<h2 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h2><p>进入项目目录 </p>
+<p><code>cd my-cv</code></p>
+<p>启动起来看看</p>
+<p><code>npm run dev</code></p>
+<p>这里 Node版本12会报错，16没问题。</p>
+<blockquote>
+<p>“Could not locate @remix-run/serve. Please verify you have it installed to use the dev command.”</p>
+</blockquote>
+<p>可以访问<code>http://localhost:3000</code>了。<br>直接带有一个Demo，展示了路由的各种状态，404，401之类的，还有带参数的路由。可以留着参考，也可以删掉。</p>
+<h2 id="创建页面"><a href="#创建页面" class="headerlink" title="创建页面"></a>创建页面</h2><p>这个Demo样式还行，就留着了，反正自己写样式对于学习Remix没有太大意义。所以我把导航改成中文，然后第二个页面改成一个新路由，一会可以创建它，用来展示简历。然后第三个Github的连接改成自己的了。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">&quot;/resume&quot;</span>&gt;</span>简历<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://github.com/tychio&quot;</span>&gt;</span>GitHub<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后，创建对应的页面。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir app/routes/resume</span><br><span class="line">touch app/routes/resume/index.tsx</span><br></pre></td></tr></table></figure>
+
+<p>然后填入一些静态文本，名字和介绍。还有技能，这个可以用载入动态数据来做，先做前端部分，直接从字面量返回。利用<code>useLoaderData</code>返回数据。</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; LoaderFunction &#125; <span class="keyword">from</span> <span class="string">&quot;remix&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useLoaderData, json &#125; <span class="keyword">from</span> <span class="string">&quot;remix&quot;</span>;</span><br><span class="line"><span class="keyword">type</span> ResumeData = &#123;</span><br><span class="line">  <span class="attr">skills</span>: <span class="built_in">Array</span>&lt;&#123; <span class="attr">name</span>: <span class="built_in">string</span> &#125;&gt;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loader: LoaderFunction = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> data: ResumeData = &#123;</span><br><span class="line">    <span class="attr">skills</span>: [</span><br><span class="line">      <span class="string">&#x27;JavaScript&#x27;</span>, <span class="string">&#x27;CSS/HTML&#x27;</span>, <span class="string">&#x27;React&#x27;</span>, <span class="string">&#x27;Remix&#x27;</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> json(data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">ResumeIndex</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> resume = useLoaderData&lt;ResumeData&gt;();</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Zhang Zhengzheng<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        A full-stack developer, Senior consultant, Freelancer.</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        &#123;resume.skills.map((skill, index) =&gt; (</span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;index !== 0 ? &#x27;, &#x27; : &#x27;&#x27;&#125;&#123;skill.name&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">        ))&#125;</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：这里的<code>loader</code>是被后端API钩子<code>useLoaderData</code>调用的，所以看不到使用</p>
+</blockquote>
+<p>我还定义了<code>ResumeData</code>类型用于该页面的动态数据，它包含了<code>skills</code>。</p>
+<h2 id="使用数据库ORM"><a href="#使用数据库ORM" class="headerlink" title="使用数据库ORM"></a>使用数据库ORM</h2><p>下一步，找一个ORM，把数据彻底放在数据库里。我选择了Prisma，</p>
+<p><code>npm install --save-dev prisma</code></p>
+<p><code>npm install @prisma/client</code></p>
+<h4 id="初始化ORM"><a href="#初始化ORM" class="headerlink" title="初始化ORM"></a>初始化ORM</h4><p><code>npx prisma init --datasource-provider mysql</code></p>
+<p>我选择了mysql，你可以直接使用SQL Lite <code>npx prisma init --datasource-provider sqlite</code>。</p>
+<p>然后在添加的<code>.env</code>文件里设置<code>DATABASE_URL</code></p>
+<p><code>mysql://&lt;username&gt;:&lt;password&gt;@&lt;host | localhost&gt;:&lt;port&gt;/&lt;database_name&gt;</code></p>
+<p>然后执行 <code>npx prisma db pull</code> 读取数据库并自动生成schema。</p>
+<p>再执行<code>npx prisma generate</code>生成客户端。<br>这样就可以通过以下代码使用ORM。</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; PrismaClient &#125; <span class="keyword">from</span> <span class="string">&#x27;@prisma/client&#x27;</span></span><br><span class="line"><span class="keyword">const</span> prisma = <span class="keyword">new</span> PrismaClient()</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><p>我提前创建了skills表，所以刚才pull的时候，在<code>prisma/schema.prisma</code>文件里就有了model。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">model skills &#123;</span><br><span class="line">  id   Int     @id @default(autoincrement())</span><br><span class="line">  name String? @db.VarChar(30)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果数据库中没有的表，先在这里写上model schema，再执行<code>npx prisma db push</code>就可以在数据库中创建对应的表。</p>
+<blockquote>
+<p>记得在<code>.gitignore</code>里添加<code>.env</code>。如果使用的SQLite，还有<code>/prisma/xxx.db</code>。</p>
+</blockquote>
+<h4 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h4><p>创建<code>prisma/seed.ts</code>文件，用于最初的数据。</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; PrismaClient &#125; <span class="keyword">from</span> <span class="string">&quot;@prisma/client&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> db = <span class="keyword">new</span> PrismaClient();</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">seed</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="built_in">Promise</span>.all(</span><br><span class="line">    getSkills().map(<span class="function"><span class="params">joke</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> db.skills.create(&#123; <span class="attr">data</span>: joke &#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">seed();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSkills</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    &#123;    </span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;JavaScript&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>安装<code>ts-node</code>包执行seed。</p>
+<p><code>npm install --save-dev ts-node</code></p>
+<p>方便起见，在<code>package.json</code>中加入</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;prisma&quot;</span>: &#123;</span><br><span class="line">  <span class="attr">&quot;seed&quot;</span>: <span class="string">&quot;ts-node prisma/seed.ts&quot;</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>然后执行seed</p>
+<p><code>npx prisma db seed</code></p>
+<h4 id="使用数据"><a href="#使用数据" class="headerlink" title="使用数据"></a>使用数据</h4><p>在app目录下创建utils目录，以及文件<code>utils/db.server.ts</code></p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; PrismaClient &#125; <span class="keyword">from</span> <span class="string">&quot;@prisma/client&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> db: PrismaClient;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="built_in">global</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> __db: PrismaClient | <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">&quot;production&quot;</span>) &#123;</span><br><span class="line">  db = <span class="keyword">new</span> PrismaClient();</span><br><span class="line">  db.$connect();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">global</span>.__db) &#123;</span><br><span class="line">    <span class="built_in">global</span>.__db = <span class="keyword">new</span> PrismaClient();</span><br><span class="line">    <span class="built_in">global</span>.__db.$connect();</span><br><span class="line">  &#125;</span><br><span class="line">  db = <span class="built_in">global</span>.__db;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; db &#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>development</code>环境的区别是缓存了连接实例，这样不会每次重启</p>
+</blockquote>
+<p>在之前的<code>resume/index.tsx</code>页面使用它。</p>
+<p><code>import &#123; db &#125; from &quot;~/utils/db.server&quot;;</code></p>
+<blockquote>
+<p><code>~</code>是默认在Remix的模板中tsconfig.json配置的，代表app目录。</p>
+</blockquote>
+<p>更新loader方法</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> loader: LoaderFunction = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> data: ResumeData = &#123;</span><br><span class="line">    <span class="attr">skills</span>: <span class="keyword">await</span> db.skills.findMany()</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样基本的Remix流程就走通了。从数据库到页面。</p>
+<p>另外我还替换了原来的logo。<a target="_blank" rel="noopener" href="https://docs.google.com/drawings/">谷歌绘图</a> 制作svg还挺好用。</p>
+<p><img src="/images/my_cv.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/tychio/my-cv">代码</a>放到Github上了，后面还要继续，和文中可能会有差异。</p>
+
+      </article>
+  </dd>
+  <dd>
+      <div class="comments" id="disqus_thread"></div>
+  </dd>
+</dl>
+
+  </main>
+  <footer id="footer">
+  <a href="#" id="backtop">&#94;</a>
+  <address>
+    <p>
+      <span>&copy; 2021</span>
+      <span>Designed by Zhengzheng Zhang</span>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+    </p>
+    <p>
+      <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+    </p>
+  </address>
+</footer>
+  <script type="text/javascript" src="/js/script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Category: Tech | Tychlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="关于JavaScript，Web前端开发，框架学习，技术发现，编程，敏捷，精益的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tychlog">
+<meta property="og:url" content="https://blog.tychio.net/categories/Tech/page/2/index.html">
+<meta property="og:site_name" content="Tychlog">
+<meta property="og:description" content="关于JavaScript，Web前端开发，框架学习，技术发现，编程，敏捷，精益的博客">
+<meta property="og:locale">
+<meta property="article:author" content="Zhengzheng Zhang">
+<meta property="article:tag" content="Tychio 张铮铮 Front-End 前端开发 Web前端 Javascript HTML CSS 互联网 浏览器 技术 IT 精益 敏捷 远程">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script type="text/javascript">
+    var auther = document.getElementsByTagName('meta');
+    auther = auther[auther.length - 1];
+    auther.content = (-~[]+([]+[])+(-~[]<<!![]<<!![]-~[])+-~[]+-~[]+(!![]<<!![])+-[]+(!![]<<-~[]-~[]+!![])+(!![]-~[])*(!![]+!![]+!![])+(!![]-~[])+(!![]-~[])*(-~[]<<!![])-[])[([]/[]+{})[-~[]<<-~[]-~[]-~[]-~[]]+([]/[]+{})[-~[]<<-~[]<<!![]]+(([]+[])[([]+{})[(-~[]<<-~[]<<-~[])-~[]]+([]+{})[-~[]]+([][{}]+{})[-~[]]+(![]+{})[(-~[]<<-~[])-~[]]+(!![]+{})[-[]]+(!![]+{})[-~[]]+([][{}]+{})[-[]]+([]+{})[(-~[])+(-~[]+!![]+{})[-[]]]+((~[])/(-![])+{})[(-~[]+!![])+(-~[]+{})[-[]]]+([][{}]+{})[-~[]+(-[]+{})[-[]]]+(([]==-[])+{})[-~[]]]+{})[([]+{}+!![]+([]===[]))[(-~[]-~[])+(-~[]-~[]+{})[-[]]]+(([])[!![]]+{})[-[]]+([]/[]+{})[-~[]+(!![]+!![]+{})[-[]]]+(!![]+{}+![])[-~[]-~[]+(!![]-~[]+{})[-[]]]+(([{}]!==[])+{})[~[]-~[]]+(([{}]!==[])+{})[[]-~[]]]((-~[]<<-~[]-~[]-~[])-~[],(!![]+!![])*(-~[]-~[]-~[]))]((((-~[]+!![])<<!![])+~[])*(-~[]+((([]!==[])-[])-~[]+([]+[]))));
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Tychlog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header>
+  <div id="logo">
+    <span class="logo-patial logo-top">
+    </span>
+    <span class="logo-patial logo-left">
+    </span>
+    <span class="logo-patial logo-right">
+    </span>
+  </div>
+  <div id="top">
+    <a href="/"><h1>Tychlog</h1></a>
+    <nav>
+      
+        <a class="main-nav-link" href="/categories/Tech">Tech</a>
+      
+        <a class="main-nav-link" href="/categories/Work">Work</a>
+      
+        <a class="main-nav-link" href="/categories/Read">Read</a>
+      
+        <a class="main-nav-link" href="/archives">Archives</a>
+      
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://www.tychio.net">About</a>
+      
+        <a class="main-nav-link" href="/atom.xml">Feed</a>
+      
+    </nav>
+    <a id="list"></a>
+  </div>
+</header>
+  <main>
+    <div>
+  <dl>
+    <dt>Tech </dt>
+    
+      <dd>
+        <a href="/2013/06/05/event-keycode/">
+          <time>Jun 06 2013 </time>
+          <h4>键盘事件的KeyCode分析</h4>
+        </a>
+        <article class="excerpt" id="post-event-keycode">
+          <h2 id="keyup和keydown事件以及keyCode和which属性"><a href="#keyup和keydown事件以及keyCode和which属性" class="headerlink" title="keyup和keydown事件以及keyCode和which属性"></a>keyup和keydown事件以及keyCode和which属性</h2><p>我想关于键盘事件最常见的实例就是回车提交表单了，恐怕每个前端都有一段烂熟于胸的代码用来实现这个功能。以前我也只是做了这样一个功能，也许它的代码是这样的：</p>
+<pre><code>function enter (p_event) &#123;
+    var _keyCode = p_event.which ? p_event.which : p_event.keyCode;
+    var _ENTER_CODE = 13;
+    if (_ENTER_CODE === _keyCode) &#123;
+        //enter code...
+    &#125;
+&#125;
+</code></pre>
+<p>如果需要兼容ie8及以下，那还需要这几行代码：</p>
+<pre><code>if (typeof p_event === &#39;undefined&#39;) &#123;
+    p_event = window.event;
+&#125;
+</code></pre>
+<p>当然，enter还需要绑定到一个键盘事件中，键盘事件有三种，我以前倾向于使用keyup [1]，这样的体验比较好，符合人的习惯，在松开按键的时候生效。不过有时候keydown也是很棒的选择，比如说用户希望可以快速触发时，比如游戏中，我还记得WOW有一款插件是专门修改为按下触发技能的。</p>
+        </article>
+      </dd>
+    
+      <dd>
+        <a href="/2013/05/28/design-tools2/">
+          <time>May 29 2013 </time>
+          <h4>推荐一些图片工具</h4>
+        </a>
+        <article class="excerpt" id="post-design-tools2">
+          <p>上周介绍了几种配色工具，这次要介绍的是一些图片和图标的生成工具。</p>
+<p>就算你熟练掌握Photoshop之类的图片处理工具，要制作一个小小的图标还是挺费时费力的。可是网上下载的话，颜色尺寸又不一定能适合，所以制作图片的工具将是非常必要的。</p>
+<h3 id="Online-Generator"><a href="#Online-Generator" class="headerlink" title="Online Generator"></a><a target="_blank" rel="noopener" href="http://onlinegenerator.net/">Online Generator</a></h3><p><a target="_blank" rel="noopener" href="http://preloaders.net/"><img src="http://onlinegenerator.net/images/preloaders.png"></a></p>
+<p>Online Generator包括好几个很棒的工具，首先是Preloaders，它用于制作loading图片，它的图片种类很齐全，还有大量的3D图片，最重要的是它可以任意改变尺寸，当然也包括颜色，动画。动画可以选择方向频率等等，功能十分强大，基本上只要你能找到喜欢的图案，它就一定能制作出你想要的loading图片。</p>
+        </article>
+      </dd>
+    
+      <dd>
+        <a href="/2013/05/20/design-tools/">
+          <time>May 21 2013 </time>
+          <h4>推荐几个配色工具</h4>
+        </a>
+        <article class="excerpt" id="post-design-tools">
+          <p>作为一名前端工程师，或多或少都会接触到设计，虽然我很讨厌有人把前端和美工等同，但是我仍然很喜欢设计，这是一个Web必不可少的环节。</p>
+<p>不过毕竟不是专业的设计师，不可能什么都靠自己，我相信工具的帮助将会让前端做起一般的设计来游刃有余。</p>
+<p>首先介绍简单而常用的工具，颜色选择工具。</p>
+<h3 id="Kuler"><a href="#Kuler" class="headerlink" title="Kuler"></a><a target="_blank" rel="noopener" href="https://kuler.adobe.com/">Kuler</a></h3><p><img src="/images/kuler.jpg"></p>
+<p>Kuler是adobe的一款在线配色方案分享服务，上面有海量的设计师们的配色方案，最多有5种颜色，有详细的颜色代码，HSV，RGB，CMKY，LAB，HEX。每一个配色方案都可以收藏，只有你有adobe的帐户，还可以随意修改。</p>
+        </article>
+      </dd>
+    
+      <dd>
+        <a href="/2013/04/27/create/">
+          <time>Apr 28 2013 </time>
+          <h4>在Github上创建一个博客</h4>
+        </a>
+        <article class="excerpt" id="post-create">
+          <h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><p><img src="/images/jekyll.png">使用Github创建博客，项目名必须是username.github.io，然后直接使用主分支master即可。github使用的jekyll会自动根据相关文件生成一个_site文件夹，包括整个blog的静态文件用于访问。</p>
+<p>_layouts文件夹为模板文件夹，可以创建一个default(自定)的html文件作为模板，并使用<code>&#123;&#123;content&#125;&#125;</code>作为模板接受的内容变量，另外还有<code>&#123;&#123;page.title&#125;&#125;</code>之类的变量。<br>_posts文件夹为博客文章文件夹，发布文章的格式为yyyy-mm-dd-blogname，也就说文章的日期是自定的。格式可以使用html、md、textile。当然更易于管理的方式是建立Year&gt;Month&gt;Day这样的目录结构。</p>
+        </article>
+      </dd>
+    
+      <dd>
+        <a href="/2013/03/04/pointer-lock/">
+          <time>Mar 05 2013 </time>
+          <h4>使用Pointer Lock技术</h4>
+        </a>
+        <article class="excerpt" id="post-pointer-lock">
+          <p>所谓的mouselook其实就是第一人称视角，而<a target="_blank" rel="noopener" href="http://www.w3.org/TR/pointerlock/" title="pointerlock技术">pointerlock技术</a>（其实和第一人称没什么关系,只是说这个技术可以用来实现第一人称）其核心就是让鼠标隐藏并且无论怎么拖动鼠标，鼠标指针都不会跑出目标区域。</p>
+        </article>
+      </dd>
+    
+      <dd>
+        <a href="/2013/02/04/https/">
+          <time>Feb 05 2013 </time>
+          <h4>Https协议握手流程</h4>
+        </a>
+        <article class="excerpt" id="post-https">
+          <p>今天在segmentfault上和某人探讨了一下这个https的握手流程，其实我一开始也不是很清楚，也没有好好去思考过，通过回答这个问题，对https有了更深的认识。</p>
+<p>首先我搜索到的流程正规说法是：</p>
+        </article>
+      </dd>
+    
+  </dl>
+  
+    <nav id="page-nav">
+      
+      <a class="extend prev" rel="prev" href="/categories/Tech/">上一页</a><a class="page-number" href="/categories/Tech/">1</a><span class="page-number current">2</span>
+    </nav>
+  
+</div>
+  
+  </main>
+  <footer id="footer">
+  <a href="#" id="backtop">&#94;</a>
+  <address>
+    <p>
+      <span>&copy; 2021</span>
+      <span>Designed by Zhengzheng Zhang</span>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+    </p>
+    <p>
+      <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+    </p>
+  </address>
+</footer>
+  <script type="text/javascript" src="/js/script.js"></script>
+
+</body>
+
+</html>
