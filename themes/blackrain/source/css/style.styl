@@ -1,0 +1,364 @@
+@import "nib"
+@import "_variables"
+@import "_mixin"
+@import "_highlight"
+
+global-reset()
+
+/* ---------------- STYLE ----------------- */
+/* =web font */
+fontFace($fontBody)
+fontFace($fontTitle)
+fontFace($fontCode)
+/* =tools */
+/* ==for html5 tags */
+article, aside, figcaption, figure, dialog, time,
+footer, header, nav, section, main
+  display block
+/* ==reset style */
+html,body
+  height 100%
+  width 100%
+  padding 0
+  margin 0
+  font-family $fontBackup
+  font-size 100%
+  line-height 1
+blockquote, q
+  quotes none
+  &:after, &:before
+    content ''
+    content none
+table
+  border-collapse collapse
+  border-spacing 0
+/* ==clear chrome style */
+input, textarea, select, a, button
+  outline none
+/* ==clearfix float */
+.clearfix:after
+  content "."
+  display block
+  height 0
+  clear both
+  visibility hidden
+/* =initialize */
+a
+  &, &:link, &:visited
+    color $colorText
+    text-decoration none
+  &:hover
+    color $colorTextHover
+body
+  background $colorBg url($imgBg) repeat
+  font-family $fontBody
+  color $colorArticle
+hr
+  border 0
+  clear both
+selection($colorLink, white)
+/* =layout */
+/* ==header */
+header
+  position fixed
+  z-index $indexHeader
+  top 0
+  left 0
+  width 100%
+  background $colorHeader
+  shadow(0 0 $sizeShadow $colorBlack)
+#top
+  position: relative
+  height: $sizeHeaderHeight
+  width: $sizeContentWidthPer[0]
+  font-family $fontTitle
+  a
+    &, &:link, &:visited
+      color $colorTitleLink
+    &:hover
+      color $colorTitleLinkHover
+    h1
+      display inline-block
+      line-height $sizeTitleHeight
+      margin-top $sizeHeaderHeight - $sizeTitleHeight
+      font-size $sizeTitleHeight
+  nav
+    position absolute
+    top 0
+    right 0
+    transition(height $animateTime)
+    a
+      padding-bottom $sizeHeaderHeight - $sizeNavHeight
+      line-height $sizeNavHeight
+      margin 0 $sizeMargin
+      #list
+        display none
+#logo
+  position relative
+  overflow visible
+  float left
+  width 40px
+  height 40px
+  font-family 'Times New Roman', Times, serif
+
+  .logo-patial
+    position absolute
+    top 8px
+    left 8px
+
+    &.logo-top
+      transform translate(0px, -8px)
+    &.logo-left
+      transform rotate(120deg) translate(-1px, -9px)
+    &.logo-right
+      transform rotate(-120deg) translate(-2px, -8px)
+    &:after
+      content 'Z'
+      font-size 1.9em
+      font-weigth 300
+      color #a03030
+/* ==body */
+main
+  position relative
+  float left
+  overflow hidden
+  z-index $indexBody
+  top 0
+  left 0
+  min-height 100%
+  width $sizeContentWidthPer[0]
+  padding-bottom $sizeFooterHeight[0]
+  margin-top $sizeHeaderHeight
+  background $colorBody
+  opacity: $opacity
+  shadow(0 0 $sizeShadow $colorBlack)
+  transition(padding $animateTime)
+  aside
+    position absolute
+    top $sizeHeaderHeight
+    left 0
+    width $sizeLeftWidth[0]
+    text-align left
+    ul
+      list-style none
+      padding 0
+      li
+        padding $sizeBorder 0
+  dl
+    margin 0 0 $sizeFooterHeight[0]
+    text-align right
+    dt
+      line-height $sizeCategoryHeight
+      font-size $sizeCategoryHeight
+      padding $sizeArticleTop $sizeMargin $sizeMargin
+      border-bottom $sizeBorder solid $colorText
+      font-weight bold
+      color $colorText
+      h1
+        font-size $remTitle
+    dd
+      min-height $sizeBarHeight
+      margin-left $sizeLeftWidth[0]
+      margin-top $sizeSectionTop*.5
+      margin-bottom $sizeSectionTop*.5
+      padding-bottom $sizeSectionTop*.5
+      border-bottom $sizeBorder solid $colorText
+      &:last-child
+        border 0
+      a
+        time, label
+          float left
+          display inline
+          line-height $sizeBarHeight
+          font-weight normal
+        h4
+          overflow hidden
+          padding-right $sizeBarIndent
+          margin 0
+          line-height $sizeBarHeight
+          font-size $remBar[0]
+          font-weight normal
+          transition(padding $animateTime)
+          &:hover
+            padding-right: $sizeMargin
+      article
+        overflow hidden
+        text-align left
+        font-size $remArticle
+        font-family $fontBackup
+        line-height $sizeArticleLineHeight
+        letter-spacing $sizeLetterSpace
+        word-wrap break-word
+        color $colorArticle
+        &.excerpt
+          img
+            max-width $sizeImgMaxWidth[2]
+          h1,h2,h3,h4,h5,h6
+            font-size 1rem
+        time
+          padding 0 $sizeMargin
+          text-align right
+          color $colorText
+        img
+          float left
+          margin-right $sizeTextRight
+          margin-top $sizeTextTop
+          max-width $sizeImgMaxWidth[0]
+        h1
+          font-size 2rem
+        h2
+          margin: $remTitle * 0.8 0
+          font-size 1.8rem
+        h3
+          margin: $remTitle * 0.5 0
+          font-size 1.6rem
+        h4
+          margin: $remTitle * 0.3 0
+          font-size 1.4rem
+        h5
+          margin: $remTitle * 0.1 0
+          font-size 1.3rem
+        h6
+          font-size 1.2rem
+        h1,h2,h3,h4,h5,h6
+          color $colorWhite
+        p
+          padding $sizeMargin
+          margin 0
+          text-indent $sizeArticleIndent
+        a
+          &, &:link, &:visited
+            color $colorLink
+            text-decoration underline
+          &:hover
+            color $colorLinkHover
+        blockquote
+          background darken($colorArticle, 70%)
+          border-left $sizeBorder solid darken($colorLink, 20%)
+          margin-left 0
+          padding-left $sizeQuoteIndent
+      .comment
+        padding-top $sizeSectionTop*0.5
+        margin-top $sizeSectionTop*0.5
+        border-top $sizeBorder solid $colorText
+  #page-nav
+    margin 0 $sizeMargin $sizePaginationBottom
+    padding $sizeMargin
+    text-align right
+    font-size $remTitle
+    font-weight lighter
+    .page-number
+      margin $sizeMargin
+/* =footer */
+footer
+  float left
+  position relative
+  z-index $indexFooter
+  left 0
+  bottom $sizeFooterHeight[0]
+  height $sizeFooterHeight[0]
+  width $sizeContentWidthPer[0]
+  #backtop
+    display none
+    float left
+    position fixed
+    z-index $indexBacktop
+    right 0
+    bottom 0
+    height $sizeFooterHeight[0]
+    width 100% - $sizeContentWidthPer[0]
+    line-height $sizeFooterHeight[0] + 20px
+    text-align center
+    font-size $remIcon
+    background $colorHeader
+  address
+    text-align right
+    font-family $fontTitle
+    font-size $remSmall
+    p
+      line-height $sizeFooterHeight*.5
+      padding 0 $sizeLinePadding
+      margin 0
+      span, a
+        padding 0 $sizeMargin
+        color $colorText
+        img
+          height $sizeFooterHeight*.4
+      a:link, a:visited
+        color $colorText
+/* =responsive */
+@media all and (min-width: 1025px) and (max-width: 1280px)
+  responsive(1)
+@media all and (min-width: 641px) and (max-width: 1024px)
+  responsive(2)
+@media all and (min-width: 321px) and (max-width: 640px)
+  responsive(3)
+@media all and (max-width: 320px)
+  responsive(4)
+@media all and (min-width: 641px) and (max-width: 900px)
+  header #top nav a
+    margin 0
+    font-size $remSmall
+  main dl dd a h4
+    font-weight bold
+@media all and (max-width: 640px)
+  header #top
+    min-width $sizeMinWidth
+    width $sizeContentWidthPer[4]
+    margin $sizePhoneMargin 0
+    a
+      h1
+        margin-top $sizePhoneMargin
+    nav
+      overflow hidden
+      position static
+      height 0
+      width 100%
+      margin 0
+      background $colorHeader
+      a
+        display block
+        height $sizeHeaderHeight
+        line-height $sizeHeaderHeight
+        padding 0
+        &:hover
+          background $colorGray
+    #list
+      display block
+      position absolute
+      right $sizeMargin
+      top 0
+      height $sizeHeaderHeight
+      width $sizeHeaderHeight
+      background url($imgList) no-repeat center center
+      opacity $opacity
+      &:hover
+        opacity 1
+  main
+    padding-bottom $sizeFooterHeight[1]
+    dl
+      margin $sizeFooterHeight[0] 0 $sizeFooterHeight[1]
+      dd
+        min-width $sizeMinWidth
+        a
+          h4
+            font-size $remBar[1]
+          time
+            display none
+        article
+          font-size $remSmall
+          time
+            padding $sizePhoneMargin
+          &.excerpt
+            img
+              display block
+              float none
+              max-width $sizeImgMaxWidth[1]
+              width $sizeImgMaxWidth[1]
+              margin 0 auto
+  footer
+    bottom $sizeFooterHeight[1]
+    height $sizeFooterHeight[1]
+    font-size $remSmall
+    #backtop
+      min-width: 270 - $sizeMinWidth

@@ -1,0 +1,46 @@
+# Header
+menu:
+  Tech: /categories/Tech
+  Work: /categories/Work
+  Read: /categories/Read
+  Archives: /archives
+  About: https://www.tychio.net
+  Feed: /atom.xml
+
+# Content
+excerpt_link: Read More
+
+# display widgets at the bottom of index pages (pagination == 2)
+index_widgets:
+# - category
+# - tagcloud
+# - archive
+
+# widget behavior
+archive_type: 'monthly'
+show_count: false
+
+# Miscellaneous
+google_analytics:
+gauges_analytics:
+disqus_shortname: tychioblog
+favicon: /favicon.png
+twitter:
+google_plus:
+fb_admins:
+fb_app_id:
+
+# Feed
+feed:
+  enable: true
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true
+  template:

@@ -1,0 +1,42 @@
+
+/* -------------- FUNCTION ---------------- */
+fontFace(p_font)
+  @font-face
+    font-family p_font
+    src url(fonts/p_font.ttf) format("truetype")
+selection(p_bg=false, p_text=false, p_target='')
+  {p_target}::selection
+    if p_bg
+      background p_bg
+    if p_text
+      color p_text
+  {p_target}::-moz-selection
+    if p_bg
+      background p_bg
+    if p_text
+      color p_text
+shadow(p_attr)
+  -webkit-box-shadow p_attr
+  -moz-box-shadow p_attr
+  -ms-box-shadow p_attr
+  -o-box-shadow p_attr
+  box-shadow p_attr
+transition(p_attr)
+  -webkit-transition p_attr
+  -moz-transition p_attr
+  -ms-transition p_attr
+  -o-transition p_attr
+  transition p_attr
+responsive(p_index)
+  header #top,
+  main, footer
+    width $sizeContentWidthPer[p_index]
+  main dl dd
+    margin-left $sizeLeftWidth[p_index]
+  main aside
+    width $sizeLeftWidth[p_index]
+  footer #backtop
+    width: 100 - $sizeContentWidthPer[p_index]
+  if p_index > 2
+    header
+      position absolute

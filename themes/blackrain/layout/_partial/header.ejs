@@ -1,0 +1,19 @@
+<header>
+  <div id="logo">
+    <span class="logo-patial logo-top">
+    </span>
+    <span class="logo-patial logo-left">
+    </span>
+    <span class="logo-patial logo-right">
+    </span>
+  </div>
+  <div id="top">
+    <a href="/"><h1><%= config.title %></h1></a>
+    <nav>
+      <% for (var i in theme.menu){ %>
+        <a class="main-nav-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a>
+      <% } %>
+    </nav>
+    <a id="list"></a>
+  </div>
+</header>

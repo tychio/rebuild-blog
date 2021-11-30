@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Tychio Blog
+title: Tychlog
 subtitle: 'Front-end Thinking'
-description: 'A tech blog about JavaScript, front-end, development, frameworks, programming, and agile'
-keywords: front-end, javascript, css, html, agile, software, development, developer
+description: '关于JavaScript，Web前端开发，框架学习，技术发现，编程，敏捷，精益的博客'
+keywords: Tychio 张铮铮 Front-End 前端开发 Web前端 Javascript HTML CSS 互联网 浏览器 技术 IT 精益 敏捷 远程 
 author: Zhengzheng Zhang
 language: cn
 timezone: 'Asia/Shanghai'
@@ -45,7 +45,7 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   auto_detect: false
   tab_replace: ''
   wrap: true
@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: blackrain
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
