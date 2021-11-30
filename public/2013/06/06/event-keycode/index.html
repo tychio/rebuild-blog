@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>键盘事件的KeyCode分析 | Tychlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="keyup和keydown事件以及keyCode和which属性我想关于键盘事件最常见的实例就是回车提交表单了，恐怕每个前端都有一段烂熟于胸的代码用来实现这个功能。以前我也只是做了这样一个功能，也许它的代码是这样的： function enter (p_event) &amp;#123;     var _keyCode &#x3D; p_event.which ? p_event.which : p_event.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="键盘事件的KeyCode分析">
+<meta property="og:url" content="https://blog.tychio.net/2013/06/06/event-keycode/index.html">
+<meta property="og:site_name" content="Tychlog">
+<meta property="og:description" content="keyup和keydown事件以及keyCode和which属性我想关于键盘事件最常见的实例就是回车提交表单了，恐怕每个前端都有一段烂熟于胸的代码用来实现这个功能。以前我也只是做了这样一个功能，也许它的代码是这样的： function enter (p_event) &amp;#123;     var _keyCode &#x3D; p_event.which ? p_event.which : p_event.">
+<meta property="og:locale">
+<meta property="article:published_time" content="2013-06-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-28T11:37:27.160Z">
+<meta property="article:author" content="Zhengzheng Zhang">
+<meta property="article:tag" content="Javascript">
+<meta property="article:tag" content="event">
+<meta property="article:tag" content="which">
+<meta property="article:tag" content="keycode">
+<meta property="article:tag" content="charcode">
+<meta property="article:tag" content="unicode">
+<meta property="article:tag" content="事件">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script type="text/javascript">
+    var auther = document.getElementsByTagName('meta');
+    auther = auther[auther.length - 1];
+    auther.content = (-~[]+([]+[])+(-~[]<<!![]<<!![]-~[])+-~[]+-~[]+(!![]<<!![])+-[]+(!![]<<-~[]-~[]+!![])+(!![]-~[])*(!![]+!![]+!![])+(!![]-~[])+(!![]-~[])*(-~[]<<!![])-[])[([]/[]+{})[-~[]<<-~[]-~[]-~[]-~[]]+([]/[]+{})[-~[]<<-~[]<<!![]]+(([]+[])[([]+{})[(-~[]<<-~[]<<-~[])-~[]]+([]+{})[-~[]]+([][{}]+{})[-~[]]+(![]+{})[(-~[]<<-~[])-~[]]+(!![]+{})[-[]]+(!![]+{})[-~[]]+([][{}]+{})[-[]]+([]+{})[(-~[])+(-~[]+!![]+{})[-[]]]+((~[])/(-![])+{})[(-~[]+!![])+(-~[]+{})[-[]]]+([][{}]+{})[-~[]+(-[]+{})[-[]]]+(([]==-[])+{})[-~[]]]+{})[([]+{}+!![]+([]===[]))[(-~[]-~[])+(-~[]-~[]+{})[-[]]]+(([])[!![]]+{})[-[]]+([]/[]+{})[-~[]+(!![]+!![]+{})[-[]]]+(!![]+{}+![])[-~[]-~[]+(!![]-~[]+{})[-[]]]+(([{}]!==[])+{})[~[]-~[]]+(([{}]!==[])+{})[[]-~[]]]((-~[]<<-~[]-~[]-~[])-~[],(!![]+!![])*(-~[]-~[]-~[]))]((((-~[]+!![])<<!![])+~[])*(-~[]+((([]!==[])-[])-~[]+([]+[]))));
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Tychlog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header>
+  <div id="logo">
+    <span class="logo-patial logo-top">
+    </span>
+    <span class="logo-patial logo-left">
+    </span>
+    <span class="logo-patial logo-right">
+    </span>
+  </div>
+  <div id="top">
+    <a href="/"><h1>Tychlog</h1></a>
+    <nav>
+      
+        <a class="main-nav-link" href="/categories/Tech">Tech</a>
+      
+        <a class="main-nav-link" href="/categories/Work">Work</a>
+      
+        <a class="main-nav-link" href="/categories/Read">Read</a>
+      
+        <a class="main-nav-link" href="/archives">Archives</a>
+      
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://www.tychio.net">About</a>
+      
+        <a class="main-nav-link" href="/atom.xml">Feed</a>
+      
+    </nav>
+    <a id="list"></a>
+  </div>
+</header>
+  <main>
+    <dl>
+  <dt><h1>键盘事件的KeyCode分析</h1></dt>
+  <dd>
+      <article id="post-event-keycode">
+        <time>Jun 06 2013 </time>
+        <h2 id="keyup和keydown事件以及keyCode和which属性"><a href="#keyup和keydown事件以及keyCode和which属性" class="headerlink" title="keyup和keydown事件以及keyCode和which属性"></a>keyup和keydown事件以及keyCode和which属性</h2><p>我想关于键盘事件最常见的实例就是回车提交表单了，恐怕每个前端都有一段烂熟于胸的代码用来实现这个功能。以前我也只是做了这样一个功能，也许它的代码是这样的：</p>
+<pre><code>function enter (p_event) &#123;
+    var _keyCode = p_event.which ? p_event.which : p_event.keyCode;
+    var _ENTER_CODE = 13;
+    if (_ENTER_CODE === _keyCode) &#123;
+        //enter code...
+    &#125;
+&#125;
+</code></pre>
+<p>如果需要兼容ie8及以下，那还需要这几行代码：</p>
+<pre><code>if (typeof p_event === &#39;undefined&#39;) &#123;
+    p_event = window.event;
+&#125;
+</code></pre>
+<p>当然，enter还需要绑定到一个键盘事件中，键盘事件有三种，我以前倾向于使用keyup [1]，这样的体验比较好，符合人的习惯，在松开按键的时候生效。不过有时候keydown也是很棒的选择，比如说用户希望可以快速触发时，比如游戏中，我还记得WOW有一款插件是专门修改为按下触发技能的。</p>
+<span id="more"></span>
+<pre><code>document.getElementById(&#39;enter_input&#39;).onkeyup = enter;
+</code></pre>
+<hr>
+<p>也许enter回车这样没问题，但其他按键呢？于是我做了一组测试，发现了一些问题</p>
+<p>在keyup和keydown事件中：</p>
+<ul>
+<li>IE只有keyCode，which为undefined。</li>
+<li>Firefox的which有值，而keyCode为0，但F1-12键则恰好相反，which为0，keyCode有值。</li>
+<li>Chrome和Opare中which和keyCode都有值。</li>
+</ul>
+<p>按键码的一些差异：</p>
+<ul>
+<li>在IE、Safari中和Chrome、Firefox、Opare中存在差异。</li>
+<li>‘+ =’键是187 =&gt; 61。</li>
+<li>‘; :’键是186 =&gt; 59。</li>
+<li>‘- _’键是189 =&gt; 45, Opera很诡异的是109。</li>
+<li>win键只有IE8和Safari是91，Opera是219，其他无法触发。</li>
+<li>Meta [2] 键是93，但Opera和Chrome无法触发</li>
+</ul>
+<h2 id="keypress事件和charCode属性"><a href="#keypress事件和charCode属性" class="headerlink" title="keypress事件和charCode属性"></a>keypress事件和charCode属性</h2><p>这里其实有一个很重要但很多人都没搞清楚过的问题，那就是另外一个事件keypress，这个事情是怎么回事？曾经我只是单纯的认为它和keydown是一样的，因为它们在按下键盘后都会一直触发直到松开。而且w3school中文上的说法是</p>
+<blockquote>
+<p>onkeypress 事件会在键盘按键被按下并释放一个键时发生</p>
+</blockquote>
+<p>不过最近看到了一个属性charCode，让我初步认识到了区别所在，似乎w3school的说法不太对。起初我以为charCode和keyCode还有which是不同浏览器实现的不同名称，但似乎charCode是mozila弄出来的一个东西，那就应该和其他2个有什么区别，因此我决定好好实验一番，来分析一下这些事件与属性究竟是怎么回事。</p>
+<p>首先在我认为最强大的Chrome中测试了一下，只有在keypress事件中，charCode才有值，而在keyup和keydown中都为0，另外我发现小键盘区域大部分按键是无法触发keypress的，还有win键、ctrl、alt、meta等都无法触发。</p>
+<hr>
+<p>经过上面的测试，我大概发现了keypress的意义，<strong>keypress只有按下可产出字符的按键时才会触发</strong>，也因此keypress才能使用charCode，charCode的意义也很明显了，是<strong>按键的字符的代码</strong>，而不是keyCode或者which按键代码的意思。</p>
+<p>为了进一步检验我的理解，我试验了space、enter都有charCode值，而小键盘在点亮了Num Lock之后也有了charCode，并且按住shift或者切换Caps Lock后，charCode会发生变化也足以证明charCode是字符的unicode值，比如按下“A”时，会有小写和大写的65、97之分。</p>
+<hr>
+<p>另外关于浏览器的兼容性：</p>
+<ul>
+<li>IE8及以下和Opera12+是不支持charCode属性的。</li>
+<li>而在Firefox中，keypress事件触发时keyCode是没有值的。</li>
+</ul>
+<p>可以用以下代码试验。</p>
+<pre><code>document.body.onkeypress = function (p_event) &#123;
+    p_event = p_event ? p_event : event;
+    alert(&#39;charCode is &#39; + p_event.charCode);
+&#125;
+</code></pre>
+<p>如果在测试的过程中回车之类的按键触发了某些浏览器行为，可以这样避免，在事件方法的最后加上这行代码：</p>
+<pre><code>e.preventDefault ? e.preventDefault() : event.returnValue = false;
+</code></pre>
+<hr>
+<p>关于标准，在W3C标准中，其实无论是which、keyCode还是charCode都已经不推荐使用了，取而代之的是which和keyCode为key，charCode为char。不过遗憾的是目前所有浏览器都还没有实现key和char。</p>
+<hr>
+<blockquote>
+<p>注1：不过IE6是不支持keyup的，只能用keydown。<br>注2：meta按键就是一般在win键旁边的一个鼠标+一个菜单样式的按键，按键一般是用来弹出鼠标右键菜单的。</p>
+</blockquote>
+<hr>
+<p>参考文章：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.javascripter.net/faq/keycodes.htm">Key codes of keydown and keyup events</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/Reference/Events/keypress">Mozilla - keypress</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.w3.org/TR/DOM-Level-3-Events/#event-type-keypress">W3C Standard</a></li>
+<li><a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ie/ff974890">MSDN - charCode property</a></li>
+</ul>
+
+      </article>
+  </dd>
+  <dd>
+      <div class="comments" id="disqus_thread"></div>
+  </dd>
+</dl>
+
+  </main>
+  <footer id="footer">
+  <a href="#" id="backtop">&#94;</a>
+  <address>
+    <p>
+      <span>&copy; 2021</span>
+      <span>Designed by Zhengzheng Zhang</span>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+    </p>
+    <p>
+      <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+    </p>
+  </address>
+</footer>
+  <script type="text/javascript" src="/js/script.js"></script>
+
+</body>
+
+</html>
