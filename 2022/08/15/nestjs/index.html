@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Nest.js快速启动API项目 | Tychlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="最近上了一个新项目，这个客户管理一个庞大的任务和团队集群，而不同流程所适用的系统也不太一样，比如salesforce，hubspots之类的。这次的新项目需要在另外两个平台之间做一些事情。目前只需要先封装其中之一的API，因此我们选定使用NodeJS的框架Nest.js来实现这套API。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nest.js快速启动API项目">
+<meta property="og:url" content="https://blog.tychio.net/2022/08/15/nestjs/index.html">
+<meta property="og:site_name" content="Tychlog">
+<meta property="og:description" content="最近上了一个新项目，这个客户管理一个庞大的任务和团队集群，而不同流程所适用的系统也不太一样，比如salesforce，hubspots之类的。这次的新项目需要在另外两个平台之间做一些事情。目前只需要先封装其中之一的API，因此我们选定使用NodeJS的框架Nest.js来实现这套API。">
+<meta property="og:locale">
+<meta property="og:image" content="https://blog.tychio.net/images/nestjs.png">
+<meta property="article:published_time" content="2022-08-15T12:40:10.000Z">
+<meta property="article:modified_time" content="2022-08-15T14:33:53.526Z">
+<meta property="article:author" content="Zhengzheng Zhang">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="framework">
+<meta property="article:tag" content="nestjs">
+<meta property="article:tag" content="node">
+<meta property="article:tag" content="api">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.tychio.net/images/nestjs.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script type="text/javascript">
+    var auther = document.getElementsByTagName('meta');
+    auther = auther[auther.length - 1];
+    auther.content = (-~[]+([]+[])+(-~[]<<!![]<<!![]-~[])+-~[]+-~[]+(!![]<<!![])+-[]+(!![]<<-~[]-~[]+!![])+(!![]-~[])*(!![]+!![]+!![])+(!![]-~[])+(!![]-~[])*(-~[]<<!![])-[])[([]/[]+{})[-~[]<<-~[]-~[]-~[]-~[]]+([]/[]+{})[-~[]<<-~[]<<!![]]+(([]+[])[([]+{})[(-~[]<<-~[]<<-~[])-~[]]+([]+{})[-~[]]+([][{}]+{})[-~[]]+(![]+{})[(-~[]<<-~[])-~[]]+(!![]+{})[-[]]+(!![]+{})[-~[]]+([][{}]+{})[-[]]+([]+{})[(-~[])+(-~[]+!![]+{})[-[]]]+((~[])/(-![])+{})[(-~[]+!![])+(-~[]+{})[-[]]]+([][{}]+{})[-~[]+(-[]+{})[-[]]]+(([]==-[])+{})[-~[]]]+{})[([]+{}+!![]+([]===[]))[(-~[]-~[])+(-~[]-~[]+{})[-[]]]+(([])[!![]]+{})[-[]]+([]/[]+{})[-~[]+(!![]+!![]+{})[-[]]]+(!![]+{}+![])[-~[]-~[]+(!![]-~[]+{})[-[]]]+(([{}]!==[])+{})[~[]-~[]]+(([{}]!==[])+{})[[]-~[]]]((-~[]<<-~[]-~[]-~[])-~[],(!![]+!![])*(-~[]-~[]-~[]))]((((-~[]+!![])<<!![])+~[])*(-~[]+((([]!==[])-[])-~[]+([]+[]))));
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Tychlog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header>
+  <div id="logo">
+    <span class="logo-patial logo-top">
+    </span>
+    <span class="logo-patial logo-left">
+    </span>
+    <span class="logo-patial logo-right">
+    </span>
+  </div>
+  <div id="top">
+    <a href="/"><h1>Tychlog</h1></a>
+    <nav>
+      
+        <a class="main-nav-link" href="/categories/Tech">Tech</a>
+      
+        <a class="main-nav-link" href="/categories/Work">Work</a>
+      
+        <a class="main-nav-link" href="/categories/Read">Read</a>
+      
+        <a class="main-nav-link" href="/archives">Archives</a>
+      
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://www.tychio.net">About</a>
+      
+        <a class="main-nav-link" href="/atom.xml">Feed</a>
+      
+    </nav>
+    <a id="list"></a>
+  </div>
+</header>
+  <main>
+    <dl>
+  <dt><h1>Nest.js快速启动API项目</h1></dt>
+  <dd>
+      <article id="post-nestjs">
+        <time>Aug 15 2022 </time>
+        <p><img src="/images/nestjs.png"></p>
+<p>最近上了一个新项目，这个客户管理一个庞大的任务和团队集群，而不同流程所适用的系统也不太一样，比如salesforce，hubspots之类的。这次的新项目需要在另外两个平台之间做一些事情。目前只需要先封装其中之一的API，因此我们选定使用NodeJS的框架<a target="_blank" rel="noopener" href="https://nestjs.com/">Nest.js</a>来实现这套API。</p>
+<span id="more"></span>
+
+<h1 id="快速启动"><a href="#快速启动" class="headerlink" title="快速启动"></a>快速启动</h1><p>开启nestjs项目有3种便捷的方式。</p>
+<h5 id="使用nest自带的命令行工具"><a href="#使用nest自带的命令行工具" class="headerlink" title="使用nest自带的命令行工具"></a>使用nest自带的命令行工具</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i -g @nestjs/cli</span><br><span class="line">nest new project-name</span><br></pre></td></tr></table></figure>
+
+<p>即使不使用这种方式，也建议在node全局安装命令行工具，这样可以方便的生成各种nestjs的模块，比如controller和service之类的。</p>
+<h5 id="直接使用starter项目"><a href="#直接使用starter项目" class="headerlink" title="直接使用starter项目"></a>直接使用starter项目</h5><p>这里还有一个用于启动的样例项目，可以直接使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/nestjs/typescript-starter.git my-app</span><br><span class="line">cd my-app</span><br><span class="line">npm install</span><br><span class="line">npm run start</span><br></pre></td></tr></table></figure>
+
+<p>而且这个项目还附带了Typescript。不过要记得把之前的git信息删掉。</p>
+<h5 id="用npm安装所需的包"><a href="#用npm安装所需的包" class="headerlink" title="用npm安装所需的包"></a>用npm安装所需的包</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i --save @nestjs/core @nestjs/common rxjs reflect-metadata</span><br></pre></td></tr></table></figure>
+
+<p>直接安装nestjs的core和common就可以，rxjs和reflext-metadata也是必需的。</p>
+<p>这种方式比较干净，目录什么的需要自己创建。不过也可以使用命令行创建controller之类的，目录会自动创建好。</p>
+<p>总的来说，nestjs和其他语言API框架类似，很多东西可以自动生成或者无需编写，所以约定的习惯非常重要，尽量不要创建一些“独特”的结构，避免以后踩坑。</p>
+<h2 id="创建controller"><a href="#创建controller" class="headerlink" title="创建controller"></a>创建controller</h2><p>创建好项目之后，我创建了一个controller，nest.js中controller可以通过修饰器直接提供路由，因此没有一个route之类的文件用于配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nest g controller projects</span><br></pre></td></tr></table></figure>
+
+<p>nest.js的目录约定是按业务模块划分，因为src目录中会出现一个projects的目录，该目录下会生成一个projects.controller，以及附带的单元测试。</p>
+<h2 id="创建service"><a href="#创建service" class="headerlink" title="创建service"></a>创建service</h2><p>接着创建service，用于封装目标任务管理平台关于Projects的API。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nest g service projects</span><br></pre></td></tr></table></figure>
+
+<p>创建controller和service都会自动加入到module里，可以在每次生成后用git diff查看一下生成了哪些代码，也好心理有数。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; Controller, Get, Req &#125; from &#x27;@nestjs/common&#x27;;</span><br><span class="line">import &#123; Request &#125; from &#x27;express&#x27;;</span><br><span class="line">import &#123; Project &#125; from &#x27;src/interfaces/project.interface&#x27;;</span><br><span class="line">import &#123; ProjectsService &#125; from &#x27;./projects.service&#x27;;</span><br><span class="line"></span><br><span class="line">@Controller(&#x27;projects&#x27;)</span><br><span class="line">export class ProjectsController &#123;</span><br><span class="line">  constructor(private projectsService: ProjectsService) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  @Get()</span><br><span class="line">  findAll(@Req() request: Request): Project[] &#123;</span><br><span class="line">    return this.projectsService.findAll();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; Injectable &#125; from &#x27;@nestjs/common&#x27;;</span><br><span class="line">import &#123; Project &#125; from &#x27;src/interfaces/project.interface&#x27;;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line">export class ProjectsService &#123;</span><br><span class="line">  findAll(): Project[] &#123;</span><br><span class="line">    return [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="结构和命名"><a href="#结构和命名" class="headerlink" title="结构和命名"></a>结构和命名</h1><p>另外我特别想说明一下的是，虽然我为controller和service都使用了相同的名称，但并不是说他们是一一对应的。很多项目只是为了分层而分，controller和service都是一一对应的，其实并不正确。分层是因为它们拥有不同的意义，只有明确语义，才能在思维的过程中更好的掌握代码，也可以更好的复用，层次起到的是一种认知转换的作用。如果只是把底层的对象毫无变化的映射出来，那这个过程是毫无意义的。</p>
+<p>这里的service在nestjs中其实是provider的一种，而provider的意义则是从各种不同的地方提供数据或其他东西。我使用的ProjectsService意义在于封装另一个API，所以这个projects来源于目标任务管理平台的API名称。而controller的名称projects指的是我创建的API所要提供的数据是project，只不过它们在这里确实是同一个东西，所以名称也一样。</p>
+<p>假设，现在的业务逻辑是需要从目标任务管理平台获取projects，之后过滤出两种不同特性的projects，一种叫task任务，需要分配给人员；另一种叫note记录，只是标记一下。它们拥有不同的特性。那么我就会创建2个controller，taskController和noteController，但是它们都调用ProjectsService去使用不同的过滤条件获取数据。</p>
+<h1 id="HTTP请求"><a href="#HTTP请求" class="headerlink" title="HTTP请求"></a>HTTP请求</h1><p>使用nest.js官方的Http模块<code>HttpModule</code>就可以向其他API发出请求。该模块其实也是封装的Axios，所以用起来很方便。先安装相关模块。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i --save @nestjs/axios axios</span><br></pre></td></tr></table></figure>
+
+<p>然后在app.module中引入。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; HttpModule &#125; from &#x27;@nestjs/axios&#x27;;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">@Module(&#123;</span><br><span class="line">  imports: [HttpModule], // 引入Http模块</span><br><span class="line">  controllers: [ProjectsController],</span><br><span class="line">  providers: [ProjectsService],</span><br><span class="line">&#125;)</span><br><span class="line">export class AppModule &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="处理Axios对象"><a href="#处理Axios对象" class="headerlink" title="处理Axios对象"></a>处理Axios对象</h5><p>在service中可以这样处理http请求的返回值。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; HttpService &#125; from &#x27;@nestjs/axios&#x27;;</span><br><span class="line">import &#123; Injectable &#125; from &#x27;@nestjs/common&#x27;;</span><br><span class="line">import &#123; map, Observable &#125; from &#x27;rxjs&#x27;;</span><br><span class="line">import &#123; Project &#125; from &#x27;src/interfaces/project.interface&#x27;;</span><br><span class="line">import &#123; AxiosResponse &#125; from &#x27;axios&#x27;;</span><br><span class="line"></span><br><span class="line">@Injectable()</span><br><span class="line">export class ProjectsService &#123;</span><br><span class="line">  constructor(</span><br><span class="line">    private readonly httpService: HttpService</span><br><span class="line">  ) &#123;&#125;</span><br><span class="line">  findAll(): Observable&lt;Project[]&gt; &#123;</span><br><span class="line">    return this.httpService.get(&#x27;http://localhost:3000/api-json&#x27;).pipe(</span><br><span class="line">      map((axiosResponse: AxiosResponse) =&gt; &#123;</span><br><span class="line">        return axiosResponse.data;</span><br><span class="line">      &#125;)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为Axios会包裹一层，用data作为统一的key，所以需要map出来。这里的pipe和map方法都是来自rxjs。rxjs的核心就是Observable，使用响应式编程的方式，封装了回调和异步方式的代码。因此这里你看不到promise或者await/async之类的关键字。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>上面的请求，我只是使用了一个本地的json接口用于测试。要真正的调用目标平台的API，还需要配置项，因为包括API token这种重要字符串的一些值，需要放在环境变量中，不能直接放在代码被git提交。</p>
+<p>所以我需要加上config的配置，安装nest.js的config包，它封装的其实是dotenv包，经常使用nodejs的话，应该会很熟悉这个包。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i --save @nestjs/config</span><br></pre></td></tr></table></figure>
+
+<p>同样在app.module中引入config模块。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ConfigModule &#125; from &#x27;@nestjs/config&#x27;;</span><br><span class="line">import configuration from &#x27;./config/configuration&#x27;;</span><br><span class="line">...</span><br><span class="line">  imports: [</span><br><span class="line">    HttpModule,</span><br><span class="line">    ConfigModule.forRoot(&#123;</span><br><span class="line">      load: [configuration],</span><br><span class="line">    &#125;)</span><br><span class="line">  ],</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>这里使用forRoot是因为该模块是单例模式的。而传入的参数<code>load</code>可以把config对象载入。</p>
+<p>引入的<code>config/configuration</code>文件是新创建的配置对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export default () =&gt; (&#123;</span><br><span class="line">  port: parseInt(process.env.PORT, 10) || 3000,</span><br><span class="line">  runn: &#123;</span><br><span class="line">    url: process.env.RUNN_API_URL,</span><br><span class="line">    token: process.env.RUNN_API_TOKEN</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>我配置了端口，以及API的URL和Token。</p>
+<p>然后可能需要用到Typescript的接口，可以使用nest生成文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nest g interface runn-config</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export interface RunnConfig &#123;</span><br><span class="line">  url: string</span><br><span class="line">  token: string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在service中就可以获取这些配置项。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ConfigService &#125; from &#x27;@nestjs/config&#x27;;</span><br><span class="line">import &#123; RunnConfig &#125; from &#x27;src/interfaces/runn-config.interface&#x27;;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">constructor(</span><br><span class="line">private readonly httpService: HttpService,</span><br><span class="line">private configService: ConfigService</span><br><span class="line">) &#123;&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">const config = this.configService.get&lt;RunnConfig&gt;(&#x27;runn&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>不要忘记在根目录下创建<code>.env</code>文件填入配置的值。另外按习惯，可以创建.env.sample文件，只包含key，没有值，类似模板，被git提交管理。而.env文件则被gitignore。只在本地保留。在服务器上需要另外生成一份。</p>
+<h3 id="全局添加headers"><a href="#全局添加headers" class="headerlink" title="全局添加headers"></a>全局添加headers</h3><p>URL使用了，但Token需要在headers中添加。在app.module中使用HttpModule的register方法就可以配置其中封装的Axios。不过由于token来自config，所以需要用比较麻烦的registerAsync，注入config后，在useFactory中使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">  imports: [</span><br><span class="line">    HttpModule.registerAsync(&#123;</span><br><span class="line">      imports: [ConfigModule],</span><br><span class="line">      inject: [ConfigService],</span><br><span class="line">      useFactory: (configService: ConfigService) =&gt; (&#123;</span><br><span class="line">        headers: &#123;</span><br><span class="line">          &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,</span><br><span class="line">          Authorization: &#x27;Bearer &#x27; + configService.get(&#x27;runn.token&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;),</span><br><span class="line">    ...</span><br><span class="line">  ],</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>这样我就创建了一个基本API框架，并请求了一个简单的目标任务管理系统的API获取数据。</p>
+<h1 id="API文档"><a href="#API文档" class="headerlink" title="API文档"></a>API文档</h1><p>另外，由于客户需要了解和测试我们的API，所以需要一个postman的api集合。我准备使用Swagger，这是一个API文档的自动生成工具，它会根据框架中定义的API和参数，自动生成一个页面，包含所有的API和参数说明，以及可以直接请求该API。当然这需要修饰器的辅助。先安装nestjs的swagger包。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i --save @nestjs/swagger</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>main.ts</code>中引入并配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">import &#123; NestFactory &#125; from &#x27;@nestjs/core&#x27;;</span><br><span class="line">import &#123; SwaggerModule, DocumentBuilder &#125; from &#x27;@nestjs/swagger&#x27;;</span><br><span class="line">import &#123; AppModule &#125; from &#x27;./app.module&#x27;;</span><br><span class="line"></span><br><span class="line">async function bootstrap() &#123;</span><br><span class="line">  const app = await NestFactory.create(AppModule);</span><br><span class="line"></span><br><span class="line">  // swagger</span><br><span class="line">  const config = new DocumentBuilder()</span><br><span class="line">    .setTitle(&#x27;My APIs&#x27;)</span><br><span class="line">    .setDescription(&#x27;My APIs documents&#x27;)</span><br><span class="line">    .setVersion(&#x27;1.0&#x27;)</span><br><span class="line">    .build();</span><br><span class="line">  const document = SwaggerModule.createDocument(app, config);</span><br><span class="line">  SwaggerModule.setup(&#x27;api&#x27;, app, document);</span><br><span class="line">  // swagger end</span><br><span class="line"></span><br><span class="line">  await app.listen(3000);</span><br><span class="line">&#125;</span><br><span class="line">bootstrap();</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以通过<code>http://localhost:3000/api</code>访问该API文档页面。不过目前所有API都会出现在default默认标签下。官方示例中使用的addTag方法虽然可以添加一个标签，但并不能指定某些API放入该标签。我需要通过修饰器实现。</p>
+<p>在controller的方法上使用<code>@ApiTags(&#39;Project&#39;)</code>即可，该方法会被放置在Project标签下。</p>
+<p>除了API文档的页面形式。<code>http://localhost:3000/api-json</code>的JSON格式才是最重要的，可以使用它在Postman中直接导入。</p>
+
+      </article>
+  </dd>
+  <dd>
+      <div class="comments" id="disqus_thread"></div>
+  </dd>
+</dl>
+
+  </main>
+  <footer id="footer">
+  <a href="#" id="backtop">&#94;</a>
+  <address>
+    <p>
+      <span>&copy; 2022</span>
+      <span>Designed by Zhengzheng Zhang</span>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+    </p>
+    <p>
+      <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+    </p>
+  </address>
+</footer>
+  <script type="text/javascript" src="/js/script.js"></script>
+
+</body>
+
+</html>

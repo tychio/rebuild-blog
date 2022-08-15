@@ -73,6 +73,17 @@
     <dt>Tech </dt>
     
       <dd>
+        <a href="/2022/08/15/nestjs/">
+          <time>Aug 15 2022 </time>
+          <h4>Nest.js快速启动API项目</h4>
+        </a>
+        <article class="excerpt" id="post-nestjs">
+          <p><img src="/images/nestjs.png"></p>
+<p>最近上了一个新项目，这个客户管理一个庞大的任务和团队集群，而不同流程所适用的系统也不太一样，比如salesforce，hubspots之类的。这次的新项目需要在另外两个平台之间做一些事情。目前只需要先封装其中之一的API，因此我们选定使用NodeJS的框架<a target="_blank" rel="noopener" href="https://nestjs.com/">Nest.js</a>来实现这套API。</p>
+        </article>
+      </dd>
+    
+      <dd>
         <a href="/2021/11/28/remix-guide/">
           <time>Nov 28 2021 </time>
           <h4>Remix.run新手教程</h4>
@@ -178,23 +189,6 @@
         </article>
       </dd>
     
-      <dd>
-        <a href="/2013/07/09/unit-test/">
-          <time>Jul 10 2013 </time>
-          <h4>Javascript的Unit Test</h4>
-        </a>
-        <article class="excerpt" id="post-unit-test">
-          <h3 id="单元测试Unit-Test"><a href="#单元测试Unit-Test" class="headerlink" title="单元测试Unit Test"></a>单元测试Unit Test</h3><p>很早就知道单元测试这样一个概念，但直到几个月前，我真正开始接触和使用它。究竟什么是单元测试？我想也许很多使用了很久的人也不一定能描述的十分清楚，所以写了这篇文章来尝试描述它的特征和原则，以帮助更多人。</p>
-<h5 id="什么是单元测试？"><a href="#什么是单元测试？" class="headerlink" title="什么是单元测试？"></a>什么是单元测试？</h5><p>先来看看单元测试的定义，在维基百科英文版中可以找到Kolawa Adam在 <em>Automated Defect Prevention: Best Practices in Software Management</em> 一书中对单元测试的定义：</p>
-<blockquote>
-<p>In computer programming, unit testing is a method by which individual units of source code, sets of one or more computer program modules together with associated control data, usage procedures, and operating procedures are tested to determine if they are fit for use.</p>
-</blockquote>
-<p>重点在于最后，单元测试的目的显而易见，用来确定是否适合使用。而测试的方法则包括控制数据，使用和操作过程。那么以我的理解，每个单元测试就是一段用于测试一个模块或接口是否能达到预期结果的代码。开发人员需要使用代码来定义一个可用的衡量标准，并且可以快速检验。</p>
-<p>很快我发现有一个误区，许多人认为单元测试必须是一个runner集中运行所有单元的测试，并一目了然。不，这仅仅是一种自动化单元测试的最佳实践，在一些小型项目中单元测试可能仅仅是一组去除其他特性的接口调用。甚至在一些图形处理或布局的项目中单元测试可以结合自身特性变的十分有趣，比如<a target="_blank" rel="noopener" href="http://masonry.desandro.com/">Masonry</a>，一个网格布局库，在它的单元测试中不是一个红或绿的条目，而是一行一行的小格布局用以说明布局被完成的事实，这样比代码检查布局是否正确再以颜色显示结果来得更直观高效，也避免了测试程序本身的bug导致的失误。</p>
-<p>打个比方，单元测试就像一把尺子，当测量的对象是一个曲面时，也许可以花费大力气去将它抽象成平面，但我更提倡量身定做一把弯曲的尺子去适应这个曲面。无论怎样，单元测试是为了生产代码而写，它应当足够的自由奔放，去适应各种各样的生产代码。</p>
-        </article>
-      </dd>
-    
   </dl>
   
     <nav id="page-nav">
@@ -209,7 +203,7 @@
   <a href="#" id="backtop">&#94;</a>
   <address>
     <p>
-      <span>&copy; 2021</span>
+      <span>&copy; 2022</span>
       <span>Designed by Zhengzheng Zhang</span>
       <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
     </p>
