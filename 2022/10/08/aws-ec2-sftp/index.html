@@ -15,8 +15,9 @@
 <meta property="og:site_name" content="Tychlog">
 <meta property="og:description" content="最近有一个客户想在AWS EC2上安装SFTP服务，其实之前已经给他设置了AWS Transfer Family服务，可以直接为S3开通SFTP服务。不过这个客户觉得太贵，所以还是想在已经存在的EC2服务器上安装SFTP服务，并且连接到S3。本来以为很简单的事情，没想到花了一天时间，还差点把服务器弄坏了。">
 <meta property="og:locale">
+<meta property="og:image" content="https://blog.tychio.net/images/terminal.png">
 <meta property="article:published_time" content="2022-10-08T03:21:40.000Z">
-<meta property="article:modified_time" content="2022-10-18T14:59:41.387Z">
+<meta property="article:modified_time" content="2022-10-18T15:07:22.225Z">
 <meta property="article:author" content="Zhengzheng Zhang">
 <meta property="article:tag" content="aws">
 <meta property="article:tag" content="ec2">
@@ -25,6 +26,7 @@
 <meta property="article:tag" content="devops">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.tychio.net/images/terminal.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -80,7 +82,8 @@
   <dd>
       <article id="post-aws-ec2-sftp">
         <time>Oct 08 2022 </time>
-        <p>最近有一个客户想在AWS EC2上安装SFTP服务，其实之前已经给他设置了AWS Transfer Family服务，可以直接为S3开通SFTP服务。不过这个客户觉得太贵，所以还是想在已经存在的EC2服务器上安装SFTP服务，并且连接到S3。本来以为很简单的事情，没想到花了一天时间，还差点把服务器弄坏了。</p>
+        <p><img src="/images/terminal.png" alt="terminal"></p>
+<p>最近有一个客户想在AWS EC2上安装SFTP服务，其实之前已经给他设置了AWS Transfer Family服务，可以直接为S3开通SFTP服务。不过这个客户觉得太贵，所以还是想在已经存在的EC2服务器上安装SFTP服务，并且连接到S3。本来以为很简单的事情，没想到花了一天时间，还差点把服务器弄坏了。</p>
 <span id="more"></span>
 
 <h2 id="在EC2上安装S3FS"><a href="#在EC2上安装S3FS" class="headerlink" title="在EC2上安装S3FS"></a>在EC2上安装S3FS</h2><p>EC2也就是linux云服务器，为其安装SFTP其实很简单。创建一个专门的用户，生成ssh key，配置SSH，分配权限就可以了。</p>
