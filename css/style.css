@@ -619,6 +619,11 @@ main dl dd article p {
   margin: 0;
   text-indent: 0px;
 }
+main dl dd article ol {
+  list-style: auto;
+  padding-left: 30px;
+  padding: 5px;
+}
 main dl dd article a,
 main dl dd article a:link,
 main dl dd article a:visited {
