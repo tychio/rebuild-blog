@@ -73,6 +73,17 @@
     <dt>最新文章 </dt>
     
       <dd>
+        <a href="/2014/03/15/css-principle/">
+          <time>Mar 16 2014 </time>
+          <h4>如何写好CSS？（OOCSS\DRY\SMACSS）</h4>
+        </a>
+        <article class="excerpt" id="post-css-principle">
+          <p>很久没有写博客了，一是刚入职比较忙，二是因为总有学到新的有趣的东西，停不下脚步来总结一下。最近出差到了帝都，反而能挤出些时间来写点什么了，也正好趁着出差做的这个项目讨论一下CSS理论。</p>
+<p>我现在面对的CSS基本上就是一个三头六臂的怪物，一点不夸张，因为真的是三头六臂，同一个样式在同一个element上作用了好几遍，而同一个样式又分散在4，5个class上，优先级有很多层。可以看得出这个怪物不是一个人造就的，早期的开发者选择了SCSS技术，但混乱的import导致了一些基本的样式被多次调用，而后面的开发者又为了摆脱之前的混乱引入了其他共用样式，但无济于事。原因出在HTML上，CSS依托于HTML没有被正确的抽象，而HTML又完全的依赖业务，所有class以业务取名，HTML和CSS基本没有复用，最终抽出的共用样式也仅仅是又一次的重复。CSS重构最难的地方在于没有脚手架，即测试。虽然有一些方法来测试，比如reftest，但还不够成熟。抱着有总比没好的心态，CSS被一层又一层的覆盖了上去。</p>
+        </article>
+      </dd>
+    
+      <dd>
         <a href="/2013/11/25/clean-code/">
           <time>Nov 26 2013 </time>
           <h4>《代码整洁之道》Clean Code</h4>
@@ -205,18 +216,6 @@
 <p>首先介绍简单而常用的工具，颜色选择工具。</p>
 <h3 id="Kuler"><a href="#Kuler" class="headerlink" title="Kuler"></a><a target="_blank" rel="noopener" href="https://kuler.adobe.com/">Kuler</a></h3><p><img src="/images/kuler.jpg"></p>
 <p>Kuler是adobe的一款在线配色方案分享服务，上面有海量的设计师们的配色方案，最多有5种颜色，有详细的颜色代码，HSV，RGB，CMKY，LAB，HEX。每一个配色方案都可以收藏，只有你有adobe的帐户，还可以随意修改。</p>
-        </article>
-      </dd>
-    
-      <dd>
-        <a href="/2013/05/03/refactoring/">
-          <time>May 04 2013 </time>
-          <h4>《重构》Refactoring</h4>
-        </a>
-        <article class="excerpt" id="post-refactoring">
-          <p><img src="/images/refactoring.jpg">以前上学的时候其实大概读过这本书，但是那时没有什么项目经验，对于重构还很难理解其意义，最近因为又读了一遍这本书，发现确实是很棒的一本书，虽然现在写javascript，而这本书是以java为基础的，但仍然有很多值得参考的地方，尤其是一些常见的重构手法，让人看的时就会觉得对对对，确实经常这么干，比如Extract method还有Replace array with object等等都可以应用到其他环境中。</p>
-<p>阅读这本书最重要的首先是需要理解的是什么是重构，以前也自诩会定期重构代码，但现在想想，其实真正算作重构的时候并不多，大部分时候我们其实只是在重写，只是因为项目规模较小，所以许多问题并没有暴露出来罢了。</p>
-<p>先看看重构的定义：“<em>对软件内部结构的一种调整，目的是在</em><strong>不改变软件可观察行为</strong><em>的前提下，提高其可理解性，降低其修改成本</em>”</p>
         </article>
       </dd>
     

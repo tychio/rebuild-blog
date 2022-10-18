@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>使用S3FS将AWS S3挂载到EC2上 | Tychlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="最近有一个客户想在AWS EC2上安装SFTP服务，其实之前已经给他设置了AWS Transfer Family服务，可以直接为S3开通SFTP服务。不过这个客户觉得太贵，所以还是想在已经存在的EC2服务器上安装SFTP服务，并且连接到S3。本来以为很简单的事情，没想到花了一天时间，还差点把服务器弄坏了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用S3FS将AWS S3挂载到EC2上">
+<meta property="og:url" content="https://blog.tychio.net/2022/10/08/aws-ec2-sftp/index.html">
+<meta property="og:site_name" content="Tychlog">
+<meta property="og:description" content="最近有一个客户想在AWS EC2上安装SFTP服务，其实之前已经给他设置了AWS Transfer Family服务，可以直接为S3开通SFTP服务。不过这个客户觉得太贵，所以还是想在已经存在的EC2服务器上安装SFTP服务，并且连接到S3。本来以为很简单的事情，没想到花了一天时间，还差点把服务器弄坏了。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-10-08T03:21:40.000Z">
+<meta property="article:modified_time" content="2022-10-18T14:59:41.387Z">
+<meta property="article:author" content="Zhengzheng Zhang">
+<meta property="article:tag" content="aws">
+<meta property="article:tag" content="ec2">
+<meta property="article:tag" content="sftp">
+<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script type="text/javascript">
+    var auther = document.getElementsByTagName('meta');
+    auther = auther[auther.length - 1];
+    auther.content = (-~[]+([]+[])+(-~[]<<!![]<<!![]-~[])+-~[]+-~[]+(!![]<<!![])+-[]+(!![]<<-~[]-~[]+!![])+(!![]-~[])*(!![]+!![]+!![])+(!![]-~[])+(!![]-~[])*(-~[]<<!![])-[])[([]/[]+{})[-~[]<<-~[]-~[]-~[]-~[]]+([]/[]+{})[-~[]<<-~[]<<!![]]+(([]+[])[([]+{})[(-~[]<<-~[]<<-~[])-~[]]+([]+{})[-~[]]+([][{}]+{})[-~[]]+(![]+{})[(-~[]<<-~[])-~[]]+(!![]+{})[-[]]+(!![]+{})[-~[]]+([][{}]+{})[-[]]+([]+{})[(-~[])+(-~[]+!![]+{})[-[]]]+((~[])/(-![])+{})[(-~[]+!![])+(-~[]+{})[-[]]]+([][{}]+{})[-~[]+(-[]+{})[-[]]]+(([]==-[])+{})[-~[]]]+{})[([]+{}+!![]+([]===[]))[(-~[]-~[])+(-~[]-~[]+{})[-[]]]+(([])[!![]]+{})[-[]]+([]/[]+{})[-~[]+(!![]+!![]+{})[-[]]]+(!![]+{}+![])[-~[]-~[]+(!![]-~[]+{})[-[]]]+(([{}]!==[])+{})[~[]-~[]]+(([{}]!==[])+{})[[]-~[]]]((-~[]<<-~[]-~[]-~[])-~[],(!![]+!![])*(-~[]-~[]-~[]))]((((-~[]+!![])<<!![])+~[])*(-~[]+((([]!==[])-[])-~[]+([]+[]))));
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Tychlog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header>
+  <div id="logo">
+    <span class="logo-patial logo-top">
+    </span>
+    <span class="logo-patial logo-left">
+    </span>
+    <span class="logo-patial logo-right">
+    </span>
+  </div>
+  <div id="top">
+    <a href="/"><h1>Tychlog</h1></a>
+    <nav>
+      
+        <a class="main-nav-link" href="/categories/Tech">Tech</a>
+      
+        <a class="main-nav-link" href="/categories/Work">Work</a>
+      
+        <a class="main-nav-link" href="/categories/Read">Read</a>
+      
+        <a class="main-nav-link" href="/archives">Archives</a>
+      
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://www.tychio.net">About</a>
+      
+        <a class="main-nav-link" href="/atom.xml">Feed</a>
+      
+    </nav>
+    <a id="list"></a>
+  </div>
+</header>
+  <main>
+    <dl>
+  <dt><h1>使用S3FS将AWS S3挂载到EC2上</h1></dt>
+  <dd>
+      <article id="post-aws-ec2-sftp">
+        <time>Oct 08 2022 </time>
+        <p>最近有一个客户想在AWS EC2上安装SFTP服务，其实之前已经给他设置了AWS Transfer Family服务，可以直接为S3开通SFTP服务。不过这个客户觉得太贵，所以还是想在已经存在的EC2服务器上安装SFTP服务，并且连接到S3。本来以为很简单的事情，没想到花了一天时间，还差点把服务器弄坏了。</p>
+<span id="more"></span>
+
+<h2 id="在EC2上安装S3FS"><a href="#在EC2上安装S3FS" class="headerlink" title="在EC2上安装S3FS"></a>在EC2上安装S3FS</h2><p>EC2也就是linux云服务器，为其安装SFTP其实很简单。创建一个专门的用户，生成ssh key，配置SSH，分配权限就可以了。</p>
+<h5 id="创建SFTP用户"><a href="#创建SFTP用户" class="headerlink" title="创建SFTP用户"></a>创建SFTP用户</h5><p>创建SFTP的用户和用户组，并分配用户到组。最后修改用户目录权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ groupadd sftp</span><br><span class="line">$ useradd -d /home/mysftpuser -s /bin/false -G sftp mysftpuser</span><br><span class="line">$ sudo chmod 700 /home/mysftpuser</span><br></pre></td></tr></table></figure>
+
+<p>接着编辑<code>/etc/ssh/sshd_config</code></p>
+<p>注释掉<code>Subsystem sftp /usr/lib/openssh/sftp-server</code>，换成<code>Subsystem sftp internal-sftp</code></p>
+<p>再添加下面的部分到最后</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Match user mysftpuser</span><br><span class="line">  X11Forwarding no</span><br><span class="line">  AllowTcpForwarding no</span><br><span class="line">  ChrootDirectory /home/mysftpuser</span><br><span class="line">  ForceCommand internal-sftp</span><br></pre></td></tr></table></figure>
+
+<p>然后用命令<code>sshd -t service sshd restart</code>重启ssh服务就完成了。</p>
+<p>但因为最后这一段是我从网上找到复制的，刚好有问题。重启ssh之后，实际上ssh已经挂了。直到过了一会我退出再重新登录的时候，AWS的默认用户都无法通过ssh登录到服务器了。这就导致了一个致命的问题，我没法登录服务器，也无法修复sshd_config文件了。修复的方法很麻烦，不算搜索过程，花了1小时多才算搞定。修复方法后面再说。</p>
+<h6 id="安装S3FS"><a href="#安装S3FS" class="headerlink" title="安装S3FS"></a>安装S3FS</h6><p>S3FS全称是<code>s3fs-fuse</code>。该工具基于FUSE，可以把AWS的S3（对象存储）目录映射到Linux，MacOS或FreeBCD上。这里我的EC2是用的Amazon Linux，所以按这个环境进行安装，其他环境略有不同，可以查看Github上S3FS项目的官方文档，这里不做赘述。</p>
+<p>按文档上的命令安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo amazon-linux-extras install epel</span><br><span class="line">sudo yum install s3fs-fuse</span><br></pre></td></tr></table></figure>
+
+<p>然后失败了，因为这个EC2有点老，是Amazon Linux1，无法使用epel。不得已只好手动安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo git clone https://github.com/s3fs-fuse/s3fs-fuse.git</span><br><span class="line">cd s3fs-fuse</span><br><span class="line">sudo ./autogen.sh</span><br><span class="line">sudo ./configure</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>验证一下是否安装成功</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">s3fs --version</span><br></pre></td></tr></table></figure>
+
+<h6 id="安装FUSE"><a href="#安装FUSE" class="headerlink" title="安装FUSE"></a>安装FUSE</h6><p>然后还需要安装<code>fuse</code>，也同样手动安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo wget https://github.com/libfuse/libfuse/releases/download/fuse-2.9.7/fuse-2.9.7.tar.gz</span><br><span class="line">sudo tar -xzvf fuse-2.9.7.tar.gz</span><br><span class="line">sudo rm -f fuse-2.9.7.tar.gz</span><br><span class="line">sudo mv fuse-2.9.7 fuse</span><br><span class="line">cd fuse/</span><br><span class="line">sudo ./configure --prefix=/usr</span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br><span class="line">sudo export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/lib64/pkgconfig/</span><br><span class="line">sudo ldconfig</span><br></pre></td></tr></table></figure>
+
+<p>验证一下是否安装成功</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pkg-config --modversion fuse</span><br></pre></td></tr></table></figure>
+
+<h2 id="挂载S3-Bucket"><a href="#挂载S3-Bucket" class="headerlink" title="挂载S3 Bucket"></a>挂载S3 Bucket</h2><h6 id="创建SFTP的AWS配置文件"><a href="#创建SFTP的AWS配置文件" class="headerlink" title="创建SFTP的AWS配置文件"></a>创建SFTP的AWS配置文件</h6><p>S3FS需要创建一个<code>$&#123;HOME&#125;/.passwd-s3fs</code>文件，作为保存AWS秘钥的文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo [ACCESS_KEY_ID]:[SECRET_ACCESS_KEY] &gt; $&#123;HOME&#125;/.passwd-s3fs</span><br><span class="line">chmod 600 $&#123;HOME&#125;/.passwd-s3fs</span><br></pre></td></tr></table></figure>
+<p>把ID和KEY替换成你AWS S3的ID和KEY，写入该文件就行。还有设置正确的权限。</p>
+<p>另外由于我使用默认用户<code>ec2-user</code>登录和安装，和SFTP不是同一个用户，所以需要配置fuse，允许其他用户访问。在<code>/etc</code>下创建<code>fuse.conf</code>文件，然后写入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># /etc/fuse.conf - Configuration file for Filesystem in Userspace (FUSE)</span><br><span class="line"></span><br><span class="line"># Set the maximum number of FUSE mounts allowed to non-root users.</span><br><span class="line"># The default is 1000.</span><br><span class="line">#mount_max = 1000</span><br><span class="line"></span><br><span class="line"># Allow non-root users to specify the allow_other or allow_root mount options.</span><br><span class="line">user_allow_other</span><br></pre></td></tr></table></figure>
+
+<p>主要是<code>user_allow_other</code>选项就可以开启。</p>
+<h6 id="挂载S3"><a href="#挂载S3" class="headerlink" title="挂载S3"></a>挂载S3</h6><p>最后在挂载命令中用参数指明AWS的秘钥文件路径就可以了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">s3fs my-bucket /home/mysftpuser/myfolder -o passwd_file=$&#123;HOME&#125;/.passwd-s3fs -o --allow-root -o dbglevel=info -f -o curldbg</span><br></pre></td></tr></table></figure>
+
+<p>要注意的是不要直接挂载到用户根目录，所以我特别加了一层<code>myfolder</code>，因为可能还需要添加<code>.ssh</code>之类的文件到根目录，避免在SFTP中共享出来。</p>
+<p>进入myfoler中查看一下是否出现S3对应bucket的文件，或者创建一个，看是否同步即可验证挂载是否成功。</p>
+<h6 id="撤销挂载"><a href="#撤销挂载" class="headerlink" title="撤销挂载"></a>撤销挂载</h6><p>如果要撤销挂载，S3FS并不提供特别的命令，直接使用<code>umount</code>命令即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">umount /home/mysftpuser/myfolder</span><br></pre></td></tr></table></figure>
+
+<h2 id="修复EC2的SSH"><a href="#修复EC2的SSH" class="headerlink" title="修复EC2的SSH"></a>修复EC2的SSH</h2><p>现在来说说如何修复SSH受损的EC2。</p>
+<p>在<code>sshd_conf</code>文件受损后，我再次登录时会收到<code>connection refused</code>的错误。由于这是一个普通的EC2，我也没有启用过串行控制台，所以只能选择“救援实例”的方式。</p>
+<p>简单来说，就是创建另外一个EC2实例服务器作为救援实例，然后把受损的EC2的主硬盘卷拿出来当做数据盘挂载到这个救援实例上，再通过救援实例SSH登录上去修改数据盘中的sshd_conf文件。这个方法的唯一缺点是需要停止实例一小段时间，如果有实例存储之类的会在停止后丢失的东西，那就不太适合。</p>
+<h6 id="创建救援实例"><a href="#创建救援实例" class="headerlink" title="创建救援实例"></a>创建救援实例</h6><ol>
+<li>选择与受损EC2实例相同的AMI创建救援实例，或者直接从受损实例创建一个snapshot，再用snapshot创建实例，保证其基本环境一致，而不会对挂载卷产生其他影响。</li>
+<li>停止受损的EC2实例</li>
+<li>在Volumn中分离受损卷（/dev/xvda 或 /dev/sda1）。</li>
+<li>SSH登录到救援实例上</li>
+<li>lsblk查看一下当前的卷</li>
+<li>创建一个文件夹用于挂载受损卷</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /mnt/rescue</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>挂载受损根卷，xvdf1是刚才查询到的卷名</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount -t xfs -o nouuid /dev/xvdf1 /mnt/rescue/</span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li>再次lsblk查询一下</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT</span><br><span class="line">xvda    202:0    0   8G  0 disk</span><br><span class="line">└─xvda1 202:1    0   8G  0 part /</span><br><span class="line">xvdf    202:80   0   8G  0 disk</span><br><span class="line">└─xvdf1 202:81   0   8G  0 part /mnt/rescue</span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li> 编辑修复sshd_conf文档</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vi /mnt/rescue/etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>卸载修复的卷</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo umount /mnt/rescue/</span><br></pre></td></tr></table></figure>
+
+<ol start="11">
+<li>在AWS控制台上将修复的卷从救援实例上分离，再以根卷形式挂载到原受损实例上。</li>
+<li>重新启动原实例，SSH登录测试是否成功。</li>
+<li>停止救援实例。</li>
+</ol>
+<p>这样就修复好了，以后还是应该谨慎一些，其实每次修改sshd_conf的时候，在退出前另外开一个终端登录一下就可以避免这种情况。DevOps还是需要一颗过度谨慎的心。</p>
+
+      </article>
+  </dd>
+  <dd>
+      <div class="comments" id="disqus_thread"></div>
+  </dd>
+</dl>
+
+  </main>
+  <footer id="footer">
+  <a href="#" id="backtop">&#94;</a>
+  <address>
+    <p>
+      <span>&copy; 2022</span>
+      <span>Designed by Zhengzheng Zhang</span>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+    </p>
+    <p>
+      <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+    </p>
+  </address>
+</footer>
+  <script type="text/javascript" src="/js/script.js"></script>
+
+</body>
+
+</html>
