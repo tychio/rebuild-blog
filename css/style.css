@@ -349,7 +349,7 @@ a:hover {
   color: #f4f1f1;
 }
 body {
-  background: #333 url("/img/bg.png") repeat;
+  background: #333 url("/css/images/bg.png") repeat;
   font-family: larabie;
   color: #e7e0e0;
 }
@@ -814,7 +814,7 @@ footer address p a:visited {
     top: 0;
     height: 40px;
     width: 40px;
-    background: url("/img/list.png") no-repeat center center;
+    background: url("/css/images/list.png") no-repeat center center;
     opacity: 0.8;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
     filter: alpha(opacity=80);
